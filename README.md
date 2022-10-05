@@ -1,2 +1,4 @@
 # cash flow balancer c sharp
- javascript sucks, I think I'm going to write this in C# instead
+A cash flow balancing tool
+
+I'm using this to practice Javascript, C#, and Razor, but it's also a tool that I intend to release to public use.

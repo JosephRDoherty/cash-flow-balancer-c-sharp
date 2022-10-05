@@ -9,22 +9,4 @@
 
 // [myDateTime].AddMonths(1); is the key to all this......
 
-using System;
-
-namespace cashFlowBalancerLogic {
-
-    static void Main(string[] args){
-        Console.WriteLine("Cash Flow Balancer starting up...");
-    }
-
-    public class Bill{
-
-        public Bill (string name, double amount, DateTime dueDate){
-            public string Name {get; set;}
-            public double Amount {get; set;}
-            public DateTime dueDate {get; set;}
-
-        }
-
-    }
-}
+// This file currently doesn't do anything
