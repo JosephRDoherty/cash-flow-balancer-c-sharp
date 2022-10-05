@@ -4,7 +4,71 @@
     ViewData["Title"] = "Home page";
 }
 
+@*this is jquery*@
+
+@*This is just me remembering how to use JQuery and then realizing that it's dead.'
+    <script>
+    let isAdded = false;
+    $(document).ready(function () {
+        $("#reset").hide();
+        $("#hider").click(function () {
+            $("h3").hide();
+            $("#reset").show();
+        });
+
+        
+        $("p").click(function(){
+            if (!isAdded) {
+                $("h1").append(". You've discovered my secret.");
+                isAdded = true;
+                $("#reset").show();
+            }
+        });
+
+        $("#reset").click(function() {
+            $("h3").show();
+            if(isAdded) {
+                $("h1").text("How could you do this");
+                isAdded = false;
+                $("#reset").hide();
+            }
+        });
+
+    });
+</script>*@
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p onlick="SecretButton()">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button id=hider onclick="HideH3()">Click to Hide</button>
+    <h3 id="hideMe">This will be hidden</h3>
+    <button id=reset onclick="ResetPage()">what have you done?</button>
 </div>
+
+<script>
+    let isAdded = false;
+
+    document.getElementById("reset").style.visibility = "hidden";
+
+    function HideH3(){
+        document.getElementById("hideMe").style.visibility = "hidden";
+        isAdded = true;
+        document.getElementById("reset").style.visibility = "visible";
+    }
+
+    function ResetPage(){
+        document.getElementById("hideMe").style.visibility = "visible";
+        document.getElementByClassName("display-4").innerHTML = "Welcome";
+        isAdded = false;
+        document.getElementById("reset").style.visibility = "hidden";
+        
+    }
+
+    function SecretButton(){
+        document.getElementByClassName("display-4").innerHTML = "What have you DONE TO ME?!?!?!";
+    }
+
+    
+
+
+</script>

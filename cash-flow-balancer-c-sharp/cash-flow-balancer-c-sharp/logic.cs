@@ -11,20 +11,21 @@
 
 using System;
 
-namespace cashFlowBalancerLogic {
 
-    static void Main(string[] args){
-        Console.WriteLine("Cash Flow Balancer starting up...");
-    }
 
-    public class Bill{
+    
 
-        public Bill (string name, double amount, DateTime dueDate){
-            public string Name {get; set;}
-            public double Amount {get; set;}
-            public DateTime dueDate {get; set;}
 
+// Yes I know it's a stupid name
+public static class myClass
+    {
+
+        public static void typeIt()
+        {
+            //<p>Cash Flow Balancer starting up...</ p >;
         }
 
+        //public DateTime didlydo = new DateTime(2022, 10, 5);
+        //public Bill bill1 = new Bill("Random Bill 1", 200, didlydo);
     }
-}
+
