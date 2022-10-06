@@ -17,7 +17,77 @@
 
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to the Cash Flow Balancer</h1>
+    <h1 class="display-4">Welcome</h1>
     <p>This is an ongoing project to practice using Razor, Javascript, C#, and all that</p>
     <p>It's also a functional tool that I intend to use and release</p>
 </div>
+
+
+@*Tabs*@
+<button onclick="showDiv('addCalcDiv')">Toggle addition calculator</button>
+<button onclick="showDiv('razorMagic')">Toggle Razor Magic Div</button>
+@* Revealers *@
+<div id="addCalcDiv" style="display: none;">
+    <h3>This is just an addition calculator to test forms</h3>
+    <form>
+        <label for="num1">Number to Add</label>
+        <input typeof="text" id="num1" name="num1">
+        <label for="num2">Number to Add</label>
+        <input typeof="text" id="num2" name="num2">
+        <button onclick="addCalc();return false;">Add!</button>
+    </form>
+    <h4 id="answer">Your answer will appear here</h4>
+</div>
+
+
+<div id="razorMagic" style="display: none;">
+    <p>The div toggle is working</p>
+    @* Below be Razor C# *@
+    @{
+        static string HtmlPrinter(string str){
+            string msg = $"<div class='lasagnaMachine'> <p{str}</p> </div>";
+            return Html.Raw(msg);
+        }
+
+        string LasagnaMachine(){
+            string str1 = "There's nothing happening today";
+            string str2 = "I finally got the wildfire in my sock drawer under control";
+            string str3 = "Out of the ordinary, anyways";
+            string str4 = "Garfield comic";
+            string str5 = "lasagna";
+            string[] lasagArray = { str1, str2, str3, str4, str5 };
+
+            foreach(string lasagna in lasagArray){
+                string msg = $"<div class='lasagnaMachine'> <p{lasagna}</p> </div>";
+                Html.Raw(msg);
+            }
+            return "The End";
+        }
+    }
+    @LasagnaMachine()
+    @*HtmlPrinter("It worked")*@
+
+</div>
+
+
+<!--Below be Javascript-->
+<script>
+    // Does math
+    function addCalc(){
+        const num1 = document.getElementById("num1").value;
+        const num2 = document.getElementById("num2").value;
+        //const answer = document.getElementById("answer").innerHTML;
+        let sum = Number(num1) + Number(num2);
+        document.getElementById("answer").innerHTML = sum;
+    }
+    // Toggles the visibility of the div
+    function showDiv(divClass){
+        if(document.getElementById(divClass).style.display == "block"){
+            document.getElementById(divClass).style.display="none";
+        } else {
+            document.getElementById(divClass).style.display="block";
+        }
+
+    }
+
+</script>
