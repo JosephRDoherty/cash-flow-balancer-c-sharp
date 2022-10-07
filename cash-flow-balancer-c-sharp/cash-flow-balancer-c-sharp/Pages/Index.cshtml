@@ -5,11 +5,6 @@
 }
 
 @*
-    Welcome to the Cash Flow Balancer
-    This program is going to have a few important classes
-    Most of the code I want to do in C#, but I'm not sure how effective this is going to be.
-    I'm hoping to avoid Javascript as much as possible.
-    We will see what happens.
 
     Made in 2022 by Joe Doherty
 *@
@@ -19,7 +14,7 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>This is an ongoing project to practice using Razor, Javascript, C#, and all that</p>
-    <p>It's also a functional tool that I intend to use and release</p>
+    <p>This page is currently just me messing with core concepts trying to figure stuff out</p>
 </div>
 
 
@@ -42,32 +37,12 @@
 
 <div id="razorMagic" style="display: none;">
     <p>The div toggle is working</p>
-    @* Below be Razor C# *@
-    @{
-        static string HtmlPrinter(string str){
-            string msg = $"<div class='lasagnaMachine'> <p{str}</p> </div>";
-            return Html.Raw(msg);
-        }
+    @* I DONT KNOW WHY THIS IS SO HARD WHY CANT I JUST LOOP THROUGH MY ARRAY AND SHOVE THE VALUE INTO AN HTMLHELPER THING *@
+    
 
-        string LasagnaMachine(){
-            string str1 = "There's nothing happening today";
-            string str2 = "I finally got the wildfire in my sock drawer under control";
-            string str3 = "Out of the ordinary, anyways";
-            string str4 = "Garfield comic";
-            string str5 = "lasagna";
-            string[] lasagArray = { str1, str2, str3, str4, str5 };
-
-            foreach(string lasagna in lasagArray){
-                string msg = $"<div class='lasagnaMachine'> <p{lasagna}</p> </div>";
-                Html.Raw(msg);
-            }
-            return "The End";
-        }
-    }
-    @LasagnaMachine()
-    @*HtmlPrinter("It worked")*@
 
 </div>
+
 
 
 <!--Below be Javascript-->
