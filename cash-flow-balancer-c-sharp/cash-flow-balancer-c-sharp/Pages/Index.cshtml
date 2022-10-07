@@ -12,18 +12,20 @@
 
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Joe's Laboratory</h1>
     <p>This is an ongoing project to practice using Razor, Javascript, C#, and all that</p>
     <p>This page is currently just me messing with core concepts trying to figure stuff out</p>
 </div>
 
 
 @*Tabs*@
-<button onclick="showDiv('addCalcDiv')">Toggle addition calculator</button>
-<button onclick="showDiv('razorMagic')">Toggle Razor Magic Div</button>
+<button onclick="showDiv('addCalcDiv', 'block')">Toggle addition calculator</button>
+<button onclick="showDiv('razorMagic', 'grid')">Toggle Garfield Comic</button>
+<button onclick="showDiv('productGrid', 'block')">Toggle Product Grid</button>
 @* Revealers *@
 <div id="addCalcDiv" style="display: none;">
     <h3>This is just an addition calculator to test forms</h3>
+    <p>Try to add things that aren't numbers to find out what British people call their grandma</p>
     <form>
         <label for="num1">Number to Add</label>
         <input typeof="text" id="num1" name="num1">
@@ -35,12 +37,194 @@
 </div>
 
 
+<style>
+
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    #razorMagic {
+        background-color: green;
+        display: grid;
+        grid-template-columns:[line1] 25% [line2] 25% [line3] 25%;
+        gap: 20px;
+        padding: 1em;
+        border-radius: 20px;
+        justify-content: space-between;
+    }
+
+    .lasag {
+        background-color: antiquewhite;
+        padding: 1em;
+        border-radius: 20px;
+        justify-self: center;
+
+    }
+
+    #productGrid {
+        display: flex;
+        align-items: center;
+        justify-content:center;
+    }
+
+    .gridDiv {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: auto;
+        padding: 3em;
+        gap: 1em;
+        justify-content: center;
+    }
+
+    .imageBox {
+        background-color: darkolivegreen;
+        aspect-ratio: 1/1;
+        width: clamp(30vw, 70vw, 90vw);
+        height: auto;
+        border-radius: 25px;
+        transition: all .25s ease-in-out;
+    }
+
+    .description {
+        margin-left: 1em;
+        margin-right: 1em;
+        display: flex;
+        flex-direction:column;
+        justify-content: space-around;
+        transition: all .25s ease-in-out;
+    }
+
+    .description h5 {
+        font-size: 1.5rem;
+        text-align:center;
+    }
+
+    .description p {
+       /* align-self: center;
+        justify-self: flex-start;*/
+        text-align: center;
+        font-weight: bold;
+        color: cadetblue;
+        font-size: 2rem;
+        transition: all .4s ease-in-out;
+    }
+
+    .product:hover .imageBox {
+        background-color: darksalmon;
+        box-shadow: .2rem .2rem orangered;
+    }
+
+    .product:hover .description {
+        color: orangered;
+    }
+
+    .product:hover .description p {
+        color: black;
+    }
+
+    /*Desktop and Tablet CSS*/
+    @@media only screen and (min-width:600px) {
+        .gridDiv {
+            grid-template-columns: auto auto;
+        }
+
+        .imageBox {
+            width: clamp(20vw, 40vw, 70vw);
+        }
+    }
+
+    @@media only screen and (min-width: 992px) {
+        .gridDiv {
+            grid-template-columns: auto auto auto;
+        }
+
+        .imageBox {
+            width: clamp(20vw, 25vw, 30vw);
+        }
+
+        .description p {
+            font-size: 1.5rem;
+        }
+    }
+
+</style>
+
+
 <div id="razorMagic" style="display: none;">
-    <p>The div toggle is working</p>
-    @* I DONT KNOW WHY THIS IS SO HARD WHY CANT I JUST LOOP THROUGH MY ARRAY AND SHOVE THE VALUE INTO AN HTMLHELPER THING *@
-    
+    @* Lets try this again *@
+   
+
+    @{
+        // It refuses to be a type void function, <text> must return an object I guess,
+        // so this ignores the return and basically turns it into a void, the way I want it!
+        // This feels so stupid but I couldn't figure out how to just ignore it at the source.
+        // I'll come back to this and hopefully have a better fix
+        _ = Looper();
+
+        // Loops a bunch of divs and ps
+        bool Looper(){
+            string[] lasagArray = { "There's nothing happening today", "I finally got the wildfire in my sock drawer under control!", "Out of the ordinary, anyways" };
+            for (int i = 0; i < lasagArray.Length; i++)
+            { 
+                //visual studio keeps add tabs here, I don't know why but I'm tired of fighting it.
+                                                            <text>
+                                                                <div class="lasag">
+                                                                    <p> @lasagArray[i] </p>
+                                                                </div>
+                                                            </text>
+                
+            }
+            return false;
+        }
+    }
+</div>
+
+@{
+    bool productBoxCreator(string name, string price){
+        
+    <div class="product">
+                                                    <div class="imageBox"></div>
+                                                    <div class="description">
+                                                        <h5>@name</h5>
+                                                        <p>@price</p>
+                                                    </div>
+    </div>
+        return false;
+    }
+}
 
 
+<div id="productGrid" style="display:none;">
+    <div class="gridDiv">
+        @{
+            _ = productBoxCreator("Wealth Generating Magic Beads", "$5.99");
+        }
+        @{
+            _ = productBoxCreator("Gemstones of Infinite Wisdom", "$2.99");
+        }
+        @{
+            _ = productBoxCreator("Incredible Beading Wire", "$100.99");
+        }
+        @{
+            _ = productBoxCreator("Edible Beading Wire", "$12.99");
+        }
+        @{
+            _ = productBoxCreator("Beads", "$0.99");
+        }
+        @{
+            _ = productBoxCreator("Garfield-Flavored Earings", "$9.99");
+        }
+        @{
+            _ = productBoxCreator("Qwerty Charm Bracelet", "$29.99");
+        }
+        @{
+            _ = productBoxCreator("Lasagna", "$7.99");
+        }
+        @{
+            _ = productBoxCreator("Spirit Draining Death Beads", "$6.66");
+        }
+    </div>
 </div>
 
 
@@ -56,11 +240,11 @@
         document.getElementById("answer").innerHTML = sum;
     }
     // Toggles the visibility of the div
-    function showDiv(divClass){
-        if(document.getElementById(divClass).style.display == "block"){
-            document.getElementById(divClass).style.display="none";
+    function showDiv(divClass, displayType){
+        if(document.getElementById(divClass).style.display !== "none"){
+            document.getElementById(divClass).style.display = "none";
         } else {
-            document.getElementById(divClass).style.display="block";
+            document.getElementById(divClass).style.display=displayType;
         }
 
     }
