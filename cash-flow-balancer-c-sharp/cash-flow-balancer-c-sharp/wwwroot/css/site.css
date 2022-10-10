@@ -1,6 +1,15 @@
 html {
-  font-size: 14px;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif,
+    font-size: 14px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    margin-bottom: 60px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -8,16 +17,311 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.navBar {
+    display: flex;
+    width: 100vw;
+    background-color:aliceblue;
+    justify-content: space-between;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 2vh;
+    border-bottom: 3px solid black;
+    margin-bottom: 2em;
 }
 
-body {
-  margin-bottom: 60px;
+.navBar ul {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.navBar li {
+    list-style: none;
+
+}
+
+    .navBar li a {
+        text-decoration: none;
+        color: black;
+        font-family: 'Merriweather', Georgia, serif;
+    }
+
+    .navBar li a:hover {
+        color: #ff7500;
+    }
+
+.tabContainer {
+    display: flex;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    background-color: #319194;
+    width: fit-content;
+}
+
+    .tabContainer .tabButton {
+        border: none;
+        padding: .5em;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+        background-color: transparent;
+        color: white;
+    }
+
+        .tabContainer .tabButton:hover {
+            background-color: #ff7500;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+        }
+
+        .tabContainer .tabButton:focus {
+            background-color: #ff7500;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            color: black;
+        }
+
+
+
+
+#razorMagic {
+    background-color: green;
+    display: grid;
+    grid-template-columns: [line1] 25% [line2] 25% [line3] 25%;
+    gap: 20px;
+    padding: 1em;
+    border-radius: 20px;
+    justify-content: space-between;
+}
+
+.lasag {
+    background-color: antiquewhite;
+    padding: 1em;
+    border-radius: 20px;
+    justify-self: center;
+}
+
+#productGrid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gridDiv {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    padding: 1em;
+    gap: 1em;
+    justify-content: center;
+}
+
+#hubPage {
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.flexDiv {
+    display: flex;
+    padding: 3em;
+    gap: 1em;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.imageBox {
+    background-color: #eee;
+    aspect-ratio: 1/1;
+    width: clamp(30vw, 70vw, 90vw);
+    height: auto;
+    border-radius: 25px;
+    transition: all .25s ease-in-out;
+    margin-bottom: 1em;
+}
+
+.description {
+    margin-left: 1em;
+    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    transition: all .25s ease-in-out;
+}
+
+    .description h5 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .description p {
+        text-align: center;
+        font-weight: 400;
+        color: #319194;
+        font-size: 2rem;
+        transition: all .2s ease-in-out;
+    }
+
+.featured {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-items: center;
+    transition: box-shadow .2s ease-in-out;
+    border-radius: 25px;
+}
+
+    .featured:hover {
+        
+        box-shadow: .2rem .2rem 6px #808080;
+        border-radius: 25px;
+    }
+
+    .featured .document {
+        border: 3px solid #319194;
+        border-radius: 25px;
+    }
+
+        .featured .document:hover {
+            box-shadow: none;
+            border-radius: 25px;
+        }
+
+    .featured .description {
+        flex-direction: column;
+        width: 100%;
+    }
+
+.document {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: clamp(34vw, 74vw, 94vw);
+    border-radius: 25px;
+    transition: all .2s ease-in-out;
+}
+
+    .document:hover {
+        box-shadow: .2rem .2rem #319194;
+        border-radius: 25px;
+        background-color: #eefffd;
+        cursor: pointer;
+    }
+
+    .document .imageBox {
+    }
+
+
+    .document .description {
+        align-items: center;
+        
+    }
+
+        .document .description button {
+            max-width: 30vw;
+            border-radius: 25px;
+            padding: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+            background-color: #319194;
+            color: white;
+            font-weight: bold;
+            border: none;
+            margin-bottom: 1em;
+            transition: all .2s ease-in-out;
+            justify-self: flex-end;
+        }
+
+        .document:hover button{
+            background-color: #ff7500;
+        }
+
+    .document p {
+        font-size: 1rem;
+    }
+
+.product:hover .imageBox {
+    box-shadow: .2rem .2rem #319194;
+}
+
+.product:hover .description {
+    color: #ff7500;
+}
+
+    .product:hover .description p {
+        color: #ff7500;
+    }
+
+/*Desktop and Tablet CSS*/
+@media only screen and (min-width:600px) {
+    .gridDiv {
+        grid-template-columns: auto auto;
+        padding: 3em;
+    }
+
+    .flexDiv {
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .imageBox {
+        width: clamp(20vw, 40vw, 70vw);
+        margin: .5em;
+    }
+
+    .featured {
+        width: 100%;
+        height: auto;
+        justify-self: center;
+        align-self: center;
+        
+    }
+
+        .featured .document {
+            flex-direction: row;
+            /*padding: 1em;*/
+        }
+
+    .featured .description {
+        align-items: flex-end;
+        width: 100%;
+    }
+
+    .featured h5, .featured p {
+        text-align: right;
+    }
+
+    .document {
+        width: auto;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .gridDiv {
+        grid-template-columns: auto auto auto;
+    }
+
+    .imageBox {
+        width: clamp(20vw, 25vw, 30vw);
+    }
+
+    .featured .description {
+        width: 65%;
+    }
+
+    .description p {
+        font-size: 1.5rem;
+        width: 100%;
+    }
+
+    .document p {
+        font-size: 1.25rem;
+    }
 }

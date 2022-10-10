@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "JifLIaQ15ebw5Q5+t8j3Ql0orXJgllGeUzFYBNl5B/WnDHEwZFflEcGZcTzqAStoJjSkqkYSHDZxuaYFHiajVg==",
+  "dgSpecHash": "sYCy7iBs3mWZ4iah/Y6S/LzjZ6pW4o59R8yzEbMGhQwyvNi/YKsmY0nfamYHbnDo05miNoy6g/TqLSNmKxf0Rg==",
   "success": true,
   "projectFilePath": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://g1vpwebtl01/WebNuGet/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    },
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://g1vpwebtl01/WebNuGetLegacy/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
 }

@@ -24,3 +24,4 @@ C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-bala
 C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\obj\Debug\net6.0\cash-flow-balancer-c-sharp.pdb
 C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\obj\Debug\net6.0\cash-flow-balancer-c-sharp.genruntimeconfig.cache
 C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\obj\Debug\net6.0\ref\cash-flow-balancer-c-sharp.dll
+C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\obj\Debug\net6.0\scopedcss\Pages\Shared\Old_Layout.cshtml.rz.scp.css
