@@ -13,15 +13,15 @@
 
 <div class="text-center">
     <h1 class="display-4">Joe's Laboratory</h1>
-    <p>This is an ongoing project to practice using Razor, Javascript, C#, and all that</p>
-    <p>This page is currently just me messing with core concepts trying to figure stuff out</p>
+    <p>Experiments are done here. Press a button to reveal secrets</p>
 </div>
 
 
 @*Tabs*@
-<button onclick="showDiv('addCalcDiv', 'block')">Toggle addition calculator</button>
-<button onclick="showDiv('razorMagic', 'grid')">Toggle Garfield Comic</button>
-<button onclick="showDiv('productGrid', 'block')">Toggle Product Grid</button>
+<button onclick="showDiv('addCalcDiv', 'block')">JS Form Test</button>
+<button onclick="showDiv('razorMagic', 'grid')">Grid Test</button>
+<button onclick="showDiv('productGrid', 'block')">Product Grid</button>
+<button onclick="showDiv('hubPage', 'block')">Hub Page</button>
 @* Revealers *@
 <div id="addCalcDiv" style="display: none;">
     <h3>This is just an addition calculator to test forms</h3>
@@ -78,12 +78,13 @@
     }
 
     .imageBox {
-        background-color: darkolivegreen;
+        background-color: #eee;
         aspect-ratio: 1/1;
         width: clamp(30vw, 70vw, 90vw);
         height: auto;
         border-radius: 25px;
         transition: all .25s ease-in-out;
+        margin-bottom: 1em;
     }
 
     .description {
@@ -104,23 +105,24 @@
        /* align-self: center;
         justify-self: flex-start;*/
         text-align: center;
-        font-weight: bold;
-        color: cadetblue;
+        font-weight: 400;
+        color: #319194;
         font-size: 2rem;
-        transition: all .4s ease-in-out;
+        transition: all .2s ease-in-out;
     }
 
     .product:hover .imageBox {
-        background-color: darksalmon;
-        box-shadow: .2rem .2rem orangered;
+        box-shadow: .2rem .2rem #319194;
     }
 
     .product:hover .description {
-        color: orangered;
+        color: #ff7500;
     }
 
     .product:hover .description p {
-        color: black;
+        /*font-weight: 600;*/
+        /*color: black;*/
+            color: #ff7500;
     }
 
     /*Desktop and Tablet CSS*/
@@ -167,12 +169,12 @@
             string[] lasagArray = { "There's nothing happening today", "I finally got the wildfire in my sock drawer under control!", "Out of the ordinary, anyways" };
             for (int i = 0; i < lasagArray.Length; i++)
             { 
-                //visual studio keeps add tabs here, I don't know why but I'm tired of fighting it.
-                                                            <text>
-                                                                <div class="lasag">
-                                                                    <p> @lasagArray[i] </p>
-                                                                </div>
-                                                            </text>
+                //visual studio keeps add space here, I don't know why but I'm tired of fighting it.
+                                                                    <text>
+                                                                        <div class="lasag">
+                                                                            <p> @lasagArray[i] </p>
+                                                                        </div>
+                                                                    </text>
                 
             }
             return false;
@@ -182,16 +184,31 @@
 
 @{
     bool productBoxCreator(string name, string price){
-        
-    <div class="product">
-                                                    <div class="imageBox"></div>
-                                                    <div class="description">
-                                                        <h5>@name</h5>
-                                                        <p>@price</p>
-                                                    </div>
-    </div>
+           
+        <div class="product">
+            <div class="imageBox"></div>
+            <div class="description">
+                <h5>@name</h5>
+                <p>@price</p>
+            </div>
+        </div>
         return false;
     }
+    bool docBoxCreator(string name, string copy)
+    {
+
+        <div class="product">
+            <div class="imageBox"></div>
+            <div class="description">
+                <h5>@name</h5>
+                <p>@copy</p>
+                <button>Read More</button>
+            </div>
+        </div>
+        return false;
+    }
+
+
 }
 
 
@@ -227,11 +244,17 @@
     </div>
 </div>
 
+<div id="hubPage" style="display:none">
+    <div class="gridDiv">
+            
+    </div>
+</div>
+
 
 
 <!--Below be Javascript-->
 <script>
-    // Does math
+    //Does math
     function addCalc(){
         const num1 = document.getElementById("num1").value;
         const num2 = document.getElementById("num2").value;
@@ -241,6 +264,7 @@
     }
     // Toggles the visibility of the div
     function showDiv(divClass, displayType){
+        
         if(document.getElementById(divClass).style.display !== "none"){
             document.getElementById(divClass).style.display = "none";
         } else {
