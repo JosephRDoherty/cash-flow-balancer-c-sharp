@@ -1,0 +1,73 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@*
+
+    Made in 2022 by Joe Doherty
+*@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
+
+
+
+
+<body>
+    <style>
+        body {
+            background-color: green;
+            color: red;
+        }
+
+        h1, p {
+            font-family: 'Nabla', cursive;
+            margin-left: 400px;
+        }
+
+        button {
+            padding: 1em;
+            margin-left: 460px;
+            border-width: 4px;
+        }
+
+        h3 {
+            margin-left: 301px;
+        }
+
+        h4 {
+            margin-left: 820px;
+        }
+
+
+    </style>
+
+
+
+
+    <h1>Fire Mountain Gems</h1>
+    <p>and Beads</p>
+    <button onclick="addBeads()">Purchase Beads</button>
+    <h3>Beads purchased:</h3>
+    <h4 id="numBeads"></h4>
+
+    <script>
+        var beads = 0;
+        function addBeads(){
+            beads++;
+            setBeads();
+        }
+
+        function setBeads(){
+            document.getElementById("numBeads").innerHTML = beads;
+        }
+
+
+    </script>
+
+
+
+</body>
