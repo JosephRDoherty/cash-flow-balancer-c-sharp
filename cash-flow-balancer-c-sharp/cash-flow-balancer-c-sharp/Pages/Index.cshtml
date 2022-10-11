@@ -12,12 +12,28 @@
 
 
 @*Tabs*@
-<div class="tabContainer">
-    <button class="tabButton" onclick="showDiv('addCalcDiv', 'block')">JS Form Test</button>
-    <button class="tabButton" onclick="showDiv('razorMagic', 'grid')">Grid Test</button>
-    <button class="tabButton" onclick="showDiv('productGrid', 'block')">Product Grid</button>
-    <button class="tabButton" onclick="showDiv('hubPage', 'flex')">Hub Page Concept</button>
+<div class="subNav">
+    <div class="tabContainer">
+        <button id="tab1" class="tabButton" onclick="showDiv('addCalcDiv', 'block', 'tab1')">JS Form Test</button>
+        <button id="tab2" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'tab2')">Grid Test</button>
+        <button id="tab3" class="tabButton" onclick="showDiv('productGrid', 'block', 'tab3')">Product Grid</button>
+        <button id="tab4" class="tabButton" onclick="showDiv('hubPage', 'flex', 'tab4')">Hub Page Concept</button>
+    </div>
 </div>
+
+<div class="subNavMobile">
+    <div id="hamButton" onclick="showTabPanel()">
+        <h1>...</h1>
+    </div>
+</div>
+
+<div id="tabPanel" style="display: none;">
+    <button id="mobileTab1" class="tabButton" onclick="showDiv('addCalcDiv', 'block', 'mobileTab1')">JS Form Test</button>
+    <button id="mobileTab2" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'mobileTab2')">Grid Test</button>
+    <button id="mobileTab3" class="tabButton" onclick="showDiv('productGrid', 'block', 'mobileTab3')">Product Grid</button>
+    <button id="mobileTab4" class="tabButton" onclick="showDiv('hubPage', 'flex', 'mobileTab4')">Hub Page Concept</button>
+</div>
+
 @* Revealers *@
 <div id="addCalcDiv" class="tabBox" style="display: none;">
     <h3>This is just an addition calculator to test forms</h3>
@@ -50,11 +66,11 @@
             for (int i = 0; i < lasagArray.Length; i++)
             {
                 //visual studio keeps add space here, I don't know why but I'm tired of fighting it.
-                <text>
-                    <div class="lasag">
-                        <p> @lasagArray[i] </p>
-                    </div>
-                </text>
+                    <text>
+                        <div class="lasag">
+                            <p> @lasagArray[i] </p>
+                        </div>
+                    </text>
 
             }
             return false;
@@ -66,28 +82,28 @@
     bool productBoxCreator(string name, string price)
     {
 
-        <div class="product">
-            <div class="imageBox"></div>
-            <div class="description">
-                <h5>@name</h5>
-                <p>@price</p>
-            </div>
-        </div>
+    <div class="product">
+                <div class="imageBox"></div>
+                <div class="description">
+                    <h5>@name</h5>
+                    <p>@price</p>
+                </div>
+    </div>
         return false;
     }
     bool docBoxCreator(string name, string copy)
     {
 
-        <div class="document">
-            <div class="imageBox"></div>
-            <div class="description">
-                <div>
-                    <h5>@name</h5>
-                    <p>@copy</p>
+    <div class="document">
+                <div class="imageBox"></div>
+                <div class="description">
+                    <div>
+                        <h5>@name</h5>
+                        <p>@copy</p>
+                    </div>
+                    <button>Read More</button>
                 </div>
-                <button>Read More</button>
-            </div>
-        </div>
+    </div>
         return false;
     }
 
