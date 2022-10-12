@@ -29,6 +29,8 @@ function findProfit(income = totalIncome, expenses = totalExpenses){
     return profit;
 }
 
+// Try to make the amount due to be the same percentage of income that period
+
 
 function balancerPrototype(){
 
