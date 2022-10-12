@@ -15,23 +15,27 @@
 <div class="subNav">
     <div class="tabContainer">
         <button id="tab1" class="tabButton" onclick="showDiv('addCalcDiv', 'block', 'tab1')">JS Form Test</button>
-        <button id="tab2" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'tab2')">Grid Test</button>
-        <button id="tab3" class="tabButton" onclick="showDiv('productGrid', 'block', 'tab3')">Product Grid</button>
-        <button id="tab4" class="tabButton" onclick="showDiv('hubPage', 'flex', 'tab4')">Hub Page Concept</button>
+        <button id="tab2" class="tabButton" onclick="showDiv('eventListenerTest', 'block', 'tab2')">E.L. Test</button>
+        <button id="tab3" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'tab3')">Grid Test</button>
+        <button id="tab4" class="tabButton" onclick="showDiv('productGrid', 'block', 'tab4')">Product Grid</button>
+        <button id="tab5" class="tabButton" onclick="showDiv('hubPage', 'flex', 'tab5')">Hub Page Concept</button>
+
     </div>
 </div>
-
+@* This is the hamburger button for mobile nav *@
 <div class="subNavMobile">
     <div id="hamButton" onclick="showTabPanel()">
         <h1>...</h1>
     </div>
 </div>
-
+@* Mobile nav drop panel *@
 <div id="tabPanel" style="display: none;">
     <button id="mobileTab1" class="tabButton" onclick="showDiv('addCalcDiv', 'block', 'mobileTab1')">JS Form Test</button>
-    <button id="mobileTab2" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'mobileTab2')">Grid Test</button>
-    <button id="mobileTab3" class="tabButton" onclick="showDiv('productGrid', 'block', 'mobileTab3')">Product Grid</button>
-    <button id="mobileTab4" class="tabButton" onclick="showDiv('hubPage', 'flex', 'mobileTab4')">Hub Page Concept</button>
+    <button id="mobileTab2" class="tabButton" onclick="showDiv('eventListenerTest', 'block', 'mobileTab2')">E.L. Test</button>
+    <button id="mobileTab3" class="tabButton" onclick="showDiv('razorMagic', 'grid', 'mobileTab3')">Grid Test</button>
+    <button id="mobileTab4" class="tabButton" onclick="showDiv('productGrid', 'block', 'mobileTab4')">Product Grid</button>
+    <button id="mobileTab5" class="tabButton" onclick="showDiv('hubPage', 'flex', 'mobileTab5')">Hub Page Concept</button>
+    <button id="mobileTab6" class="tabButton" onclick="showDiv('eventListenerTest', 'block', 'mobileTab6')">E.L. Test</button>
 </div>
 
 @* Revealers *@
@@ -65,12 +69,12 @@
             string[] lasagArray = { "There's nothing happening today", "I finally got the wildfire in my sock drawer under control!", "Out of the ordinary, anyways" };
             for (int i = 0; i < lasagArray.Length; i++)
             {
-                //visual studio keeps add space here, I don't know why but I'm tired of fighting it.
-                    <text>
-                        <div class="lasag">
-                            <p> @lasagArray[i] </p>
-                        </div>
-                    </text>
+
+                <text>
+                    <div class="lasag">
+                        <p> @lasagArray[i] </p>
+                    </div>
+                </text>
 
             }
             return false;
@@ -82,28 +86,28 @@
     bool productBoxCreator(string name, string price)
     {
 
-    <div class="product">
-                <div class="imageBox"></div>
-                <div class="description">
-                    <h5>@name</h5>
-                    <p>@price</p>
-                </div>
-    </div>
+        <div class="product">
+            <div class="imageBox"></div>
+            <div class="description">
+                <h5>@name</h5>
+                <p>@price</p>
+            </div>
+        </div>
         return false;
     }
     bool docBoxCreator(string name, string copy)
     {
 
-    <div class="document">
-                <div class="imageBox"></div>
-                <div class="description">
-                    <div>
-                        <h5>@name</h5>
-                        <p>@copy</p>
-                    </div>
-                    <button>Read More</button>
+        <div class="document">
+            <div class="imageBox"></div>
+            <div class="description">
+                <div>
+                    <h5>@name</h5>
+                    <p>@copy</p>
                 </div>
-    </div>
+                <button>Read More</button>
+            </div>
+        </div>
         return false;
     }
 
@@ -163,4 +167,13 @@
         }
 
     </div>
+</div>
+
+<div id="eventListenerTest" class="tabBox" style="display:none">
+    <h3>Choose Your Character</h3>
+    <div class="fakeButton">Swordsman</div>
+    <div class="fakeButton">Mage</div>
+    <div class="fakeButton">Rogue</div>
+    <div class="fakeButton">Pillager</div>
+    <h4>Your Character is <span id="charChoice"></span></h4>
 </div>

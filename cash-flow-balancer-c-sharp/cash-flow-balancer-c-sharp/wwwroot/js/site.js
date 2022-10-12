@@ -1,26 +1,38 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-
-//Does math
-function addCalc() {
-    const num1 = document.getElementById("num1").value;
-    const num2 = document.getElementById("num2").value;
-    //const answer = document.getElementById("answer").innerHTML;
-    let sum = Number(num1) + Number(num2);
-    document.getElementById("answer").innerHTML = sum;
+// The greatest function of all time
+// saves 20 keystrokes and makes the code way easier to read
+// honestly who on earth thought document.getElementById was a good idea????
+function getID(id) {
+    return document.getElementById(id);
 }
 
-function showTabPanel() {
-    //var tabPanel = document.getElementById("tabPanel");
-    //console.log(tabPanel);
 
-    if (document.getElementById("tabPanel").style.display !== "none") {
-        document.getElementById("tabPanel").style.display = "none";
-        document.getElementById("hamButton").classList.remove("hamButtonOn");
+
+
+
+
+
+
+
+//Does extremely complicated math
+function addCalc() {
+    const num1 = getID("num1").value;
+    const num2 = getID("num2").value;
+    let sum = Number(num1) + Number(num2);
+    getID("answer").innerHTML = sum;
+}
+
+// Shows the mobile tab panel
+function showTabPanel() {
+
+    if (getID("tabPanel").style.display !== "none") {
+        getID("tabPanel").style.display = "none";
+        getID("hamButton").classList.remove("hamButtonOn");
     } else {
-        document.getElementById("tabPanel").style.display = "flex";
-        document.getElementById("hamButton").classList.add("hamButtonOn");
+        getID("tabPanel").style.display = "flex";
+        getID("hamButton").classList.add("hamButtonOn");
     }
 
 }
@@ -30,21 +42,21 @@ function showTabPanel() {
 // Toggles the visibility of the div
 function showDiv(divID, displayType, tabToChange) {
     // check if the tab is hidden
-    if (document.getElementById(divID).style.display !== "none") {
+    if (getID(divID).style.display !== "none") {
 
         // hide tab
-        document.getElementById(divID).style.display = "none";
+        getID(divID).style.display = "none";
 
         // Change the look of the tab
-        document.getElementById(tabToChange).classList.remove("tabActive");
-        document.getElementById(tabToChange).classList.add("tabButton");
+        getID(tabToChange).classList.remove("tabActive");
+        getID(tabToChange).classList.add("tabButton");
     } else {
         // hide tab
-        document.getElementById(divID).style.display = displayType;
+        getID(divID).style.display = displayType;
 
         // Change the look of the tab
-        document.getElementById(tabToChange).classList.add("tabActive");
-        document.getElementById(tabToChange).classList.remove("tabButton");
+        getID(tabToChange).classList.add("tabActive");
+        getID(tabToChange).classList.remove("tabButton");
     }
 
 }
