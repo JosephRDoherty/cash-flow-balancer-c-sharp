@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DFHMCpXlRExAzplSgO7x/7fFnuubEbhHBOwzEVp7Naw=",
+  "Hash": "kSCkC/oTBTuQ7pGWfWsO+fbgxOBZS3TGfVtkv7lGftU=",
   "Source": "cash-flow-balancer-c-sharp",
   "BasePath": "_content/cash-flow-balancer-c-sharp",
   "Mode": "Default",
@@ -51,6 +51,23 @@
       "OriginalItemSpec": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\cash-flow-balancer-c-sharp.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\css\\cashFlowStyles.css",
+      "SourceId": "cash-flow-balancer-c-sharp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\",
+      "BasePath": "_content/cash-flow-balancer-c-sharp",
+      "RelativePath": "css/cashFlowStyles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\cashFlowStyles.css"
+    },
+    {
       "Identity": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\css\\site.css",
       "SourceId": "cash-flow-balancer-c-sharp",
       "SourceType": "Discovered",
@@ -83,6 +100,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\js\\cashFlowController.js",
+      "SourceId": "cash-flow-balancer-c-sharp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\",
+      "BasePath": "_content/cash-flow-balancer-c-sharp",
+      "RelativePath": "js/cashFlowController.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\cashFlowController.js"
+    },
+    {
+      "Identity": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\js\\cashFlowModel.js",
+      "SourceId": "cash-flow-balancer-c-sharp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\",
+      "BasePath": "_content/cash-flow-balancer-c-sharp",
+      "RelativePath": "js/cashFlowModel.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\cashFlowModel.js"
     },
     {
       "Identity": "C:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\wwwroot\\js\\site.js",

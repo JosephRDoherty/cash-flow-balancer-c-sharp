@@ -1,0 +1,39 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Cash Flow Balancer";
+}
+
+@*
+
+    Made in 2022 by Joe Doherty
+*@
+
+
+<link rel="stylesheet" href="~/css/cashFlowStyles.css" asp-append-version="true" />
+
+<div class="cbBody">
+    <h1>Welcome</h1>
+
+    <ul>
+        <li>Current Period: <span></span></li>
+        <li>Amount Due This Period: <span></span></li>
+        <li>Days Remaining: <span></span></li>
+        <li>Next Paycheck: <span></span></li>
+        <li>Amount Due Next Period: <span></span></li>
+        
+    </ul>
+
+    <h4>Options:</h4>
+    <ul>
+        <li>Bills Due this Period</li>
+        <li>Bills Due next Period</li>
+        <li>Add/Update Bill</li>
+        <li>Add/Update Paycheck</li>
+    </ul>
+
+
+</div>
+
+@* <script src="~/js/cashFlowController.js" asp-append-version="true"></script> *@
+<script src="~/js/cashFlowModel.js" asp-append-version="true"></script>

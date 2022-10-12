@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Projects\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp\cash-flow-balancer-c-sharp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Projects/cash-flow-balancer-c-sharp/cash-flow-balancer-c-sharp/cash-flow-balancer-c-sharp/Pages/CashBalancerView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FzaEJhbGFuY2VyVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/cash-flow-balancer-c-sharp/cash-flow-balancer-c-sharp/cash-flow-balancer-c-sharp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

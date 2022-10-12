@@ -16328,6 +16328,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\Pages\\CashBalancerView.cshtml",
+      "TargetPath": "Pages\\CashBalancerView.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Projects\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\cash-flow-balancer-c-sharp\\Pages\\Index.cshtml",
       "TargetPath": "Pages\\Index.cshtml",
       "FileKind": "mvc"

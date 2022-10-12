@@ -1,0 +1,30 @@
+﻿
+
+/* Desktop and tablet styles */
+@media only screen and (min-width: 768px) {
+
+    body {
+        background-color: #1e2124;
+        color: #ccc;
+        
+    }
+
+    .cbBody {
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+
+
+    .navBar {
+        background-color: #004c4c;
+        color: #b2d8d8;
+    }
+
+        .navBar ul li a {
+            color: #b2d8d8 !important;
+        }
+
+            .navBar ul li a:hover {
+                color: #ff7500 !important;
+            }
+}
