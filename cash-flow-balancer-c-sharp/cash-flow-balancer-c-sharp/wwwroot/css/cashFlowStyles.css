@@ -9,9 +9,39 @@
         
     }
 
+    .btn {
+        text-decoration: none;
+        background-color: rgb(155, 155, 155);
+        border: 2px outset dimgrey;
+        border-radius: 25px;
+        transition: border-style 1s ease-in-out;
+        font-weight: 900;
+    }
+
+    .btn:active {
+        border-style: inset;
+        color: #004c4c;
+    }
+
     .cbBody {
         margin-left: 10vw;
         margin-right: 10vw;
+        
+    }
+
+    .title {
+        border-bottom:4px ridge #004c4c;
+        margin-bottom: 2em;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .stats {
+        justify-self: flex-start;
     }
 
 
@@ -27,4 +57,29 @@
             .navBar ul li a:hover {
                 color: #ff7500 !important;
             }
+
+    .options {
+        display: flex;
+        flex-direction: column;
+        justify-self: flex-end;
+        padding: 1rem;
+        gap: .5rem;
+    }
+
+    .dropDown {
+        background-color: #004c4c;
+        display: flex;
+        justify-self: center;
+        align-self: center;
+        min-width: fit-content;
+        padding: 1.5rem;
+        font-weight: bold;
+        border-radius: 25px;
+    }
+
+
+
+
+
+
 }

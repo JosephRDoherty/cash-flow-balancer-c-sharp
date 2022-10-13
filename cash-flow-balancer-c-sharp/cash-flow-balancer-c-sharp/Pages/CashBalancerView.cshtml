@@ -13,25 +13,35 @@
 <link rel="stylesheet" href="~/css/cashFlowStyles.css" asp-append-version="true" />
 
 <div class="cbBody">
-    <h1>Welcome</h1>
-    <p>The bill database is currently not set up, these are only examples</p>
-    <ul>
-        <li>Current Period: <span id="currentPeriod"> </span></li>
-        <li>Amount Due This Period: <span  id="period1Expenses"> </span></li>
-        <li>Days Remaining: <span id="daysRemaining"> </span></li>
-        <li>Next Paycheck: <span id="nextPaycheck"> </span></li>
-        <li>Amount Due Next Period: <span id="period2Expenses"> </span></li>
-        
-    </ul>
+    <div class="title">
+        <h1 id="secretButton">Welcome</h1>
+        <p>The bill database is currently not set up, these are only examples</p>
+    </div>
+    <div class="menu">
+        <div class="stats">
+            <h4>Stats:</h4>
+            <ul>
+                <li>Current Period: <span id="currentPeriod"> </span></li>
+                <li>Amount Due This Period: <span  id="period1Expenses"> </span></li>
+                <li>Days Remaining: <span id="daysRemaining"> </span></li>
+                <li>Next Paycheck: <span id="nextPaycheck"> </span></li>
+                <li>Amount Due Next Period: <span id="period2Expenses"> </span></li>
+                
+            </ul>
+        </div>
 
-    <h4>Options:</h4>
-    <ul>
-        <li>Bills Due this Period</li>
-        <li>Bills Due next Period</li>
-        <li>Add/Update Bill</li>
-        <li>Add/Update Paycheck</li>
-    </ul>
-
+        <div class="options">
+            <h4>Options:</h4>
+            <ul class="options">
+                <li class="btn" id="billsDueNow">Bills Due this Period</li>
+                <div id="billsDueNowDropDown" class="dropDown" style="display: none"></div>
+                <li class="btn" id="billsDueNext">Bills Due next Period</li>
+                <div id="billsDueNextDropDown" class="dropDown" style="display: none"></div>
+                <li class="btn">Add/Update Bill</li>
+                <li class="btn">Add/Update Paycheck</li>
+            </ul>
+        </div>
+    </div>
 
 </div>
 

@@ -73,6 +73,8 @@ let phone = new Bill("Verizon", 115, 2);
 let power = new Bill("Electricity", 100, 19);
 let capitalOne = new Bill("Capital One", 25, 4);
 
+sortByDueDate(billList);
+
 // initialize arrays for each pay period
 const billListPeriod1 = [];
 const billListPeriod2 = [];
@@ -102,6 +104,7 @@ function payPeriodCalc(period){
                 billListPeriod1.push(billList[i]);
             }
         }
+        sortByDueDate(billListPeriod1);
     }
     else if(period === 2) {
         for(let i=0; i<billList.length; i++){
@@ -109,6 +112,7 @@ function payPeriodCalc(period){
                 billListPeriod2.push(billList[i]);
             }
         }
+        sortByDueDate(billListPeriod2);
     } else {
         console.log("Please enter a valid pay period");
     }
@@ -184,6 +188,32 @@ function findIdealCost(){
     return idealCost;
 }
 
+function printBillArray(array){
+    // prints any bill array
+    // for use mostly in HTML contexts 
+    var str = "";
+    array.forEach(obj => {
+        // for (let key in obj) {
+            str += obj.name;
+            str += ": $";
+            str += obj.amount;
+            str += " Due: ";
+            str += obj.dueDate
+            str += " <br> "
+        //}
+    })
+    return str;
+}
+
+function sortByDueDate(array){
+    // Sorts a bill array by due date [DEFAULT SORT]
+    function compareDueDate(a, b){
+        return a.dueDate - b.dueDate;
+    }
+
+    array.sort(compareDueDate);
+}
+
 
 
 
@@ -197,7 +227,7 @@ function getID(id){
     return document.getElementById(id);
 }
 
-
+// Top Section
 const HTMLcurrentPeriod = getID('currentPeriod');
 const HTMLperiod1Expenses = getID('period1Expenses');
 const HTMLdaysRemaining = getID('daysRemaining');
@@ -211,3 +241,28 @@ HTMLperiod1Expenses.innerHTML = period1Expenses;
 HTMLdaysRemaining.innerHTML = "";
 HTMLnextPaycheck.innerHTML = "";
 HTMLperiod2Expenses.innerHTML = period2Expenses;
+
+// Options
+const HTMLbillsDueNow = getID("billsDueNow");
+HTMLbillsDueNow.addEventListener("click", function(){showDiv("billsDueNowDropDown", "flex")});
+const HTMLbillsDueNowDropDown = getID("billsDueNowDropDown");
+const HTMLbillsDueNext = getID("billsDueNext");
+HTMLbillsDueNext.addEventListener("click", function(){showDiv("billsDueNextDropDown", "flex")});
+const HTMLbillsDueNextDropDown = getID("billsDueNextDropDown");
+
+
+HTMLbillsDueNowDropDown.innerHTML = printBillArray(billListPeriod1);
+HTMLbillsDueNextDropDown.innerHTML = printBillArray(billListPeriod2);
+
+
+document.getElementById("secretButton").addEventListener("click", function() {
+    document.getElementById("secretButton").innerHTML = "Greetings";
+    console.log("got here");
+});
+
+getID("secretButton").addEventListener("click", greetings);
+
+function greetings(){
+    getID("secretButton").innerHTML = "Greetings"
+    console.log("Greetings");
+}

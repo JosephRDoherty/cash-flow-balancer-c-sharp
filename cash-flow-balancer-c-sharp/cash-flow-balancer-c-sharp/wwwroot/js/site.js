@@ -8,14 +8,6 @@ function getID(id) {
     return document.getElementById(id);
 }
 
-
-
-
-
-
-
-
-
 //Does extremely complicated math
 function addCalc() {
     const num1 = getID("num1").value;
@@ -37,26 +29,28 @@ function showTabPanel() {
 
 }
 
-
-
 // Toggles the visibility of the div
-function showDiv(divID, displayType, tabToChange) {
+function showDiv(divID, displayType, tabToChange=null, defaultClass = null, activeClass=null) {
     // check if the tab is hidden
     if (getID(divID).style.display !== "none") {
 
         // hide tab
         getID(divID).style.display = "none";
 
-        // Change the look of the tab
-        getID(tabToChange).classList.remove("tabActive");
-        getID(tabToChange).classList.add("tabButton");
+        if(tabToChange !== null){
+            // Change the look of the tab
+            getID(tabToChange).classList.remove(activeClass);
+            getID(tabToChange).classList.add(defaultClass);
+        }
     } else {
-        // hide tab
+        // show tab
         getID(divID).style.display = displayType;
 
-        // Change the look of the tab
-        getID(tabToChange).classList.add("tabActive");
-        getID(tabToChange).classList.remove("tabButton");
+        if(tabToChange !== null){
+            // Change the look of the tab
+            getID(tabToChange).classList.add(activeClass);
+            getID(tabToChange).classList.remove(defaultClass);
+        }
     }
 
 }
