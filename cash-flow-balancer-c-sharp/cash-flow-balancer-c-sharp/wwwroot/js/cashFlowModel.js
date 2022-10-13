@@ -221,7 +221,7 @@ function sortByDueDate(array){
 //                           CONTROLLER
 // =====================================================================
 
-
+// Thanks javascript for being terrible and making this not DRY. the same code is in site.js.
 function getID(id){
     // Make this suck less
     return document.getElementById(id);
