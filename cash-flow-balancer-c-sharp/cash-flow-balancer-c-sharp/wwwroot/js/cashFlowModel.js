@@ -5,6 +5,12 @@
 //
 
 
+// Date Initializing stuff, to make the code work
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+const today = new Date();
+let name = month[today.getMonth()];
+const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
 
 // =====================================================================
@@ -83,9 +89,9 @@ const billListPeriod1 = [];
 const billListPeriod2 = [];
 
 // call functions to calculate expenses
-var period1Expenses = amountDuePeriodCalc(1);
-var period2Expenses = amountDuePeriodCalc(2);
-var totalExpenses = period1Expenses + period2Expenses;
+const period1Expenses = amountDuePeriodCalc(1);
+const period2Expenses = amountDuePeriodCalc(2);
+const totalExpenses = period1Expenses + period2Expenses;
 
 // this is an object with idealCost information.
 const idealCost = findIdealCost();
@@ -96,6 +102,15 @@ const idealCost = findIdealCost();
 // =====================================================================
 //                             Functions
 // =====================================================================
+
+
+// Rework all this code involving period1 and period2
+// It was a temporary thing, and these should all be using the date functions below
+// the periods could be defined using dates, perhaps
+// That's a whole other can of worms.
+
+
+
 
 function payPeriodCalc(period){
     // This creates the billListPeriod arrays.
@@ -111,7 +126,7 @@ function payPeriodCalc(period){
     }
     else if(period === 2) {
         for(let i=0; i<billList.length; i++){
-            if(billList[i].dueDate >= payDay2 && billList[i].dueDate <= lastDayOfMonth){
+            if(billList[i].dueDate >= payDay2 && billList[i].dueDate <= lastDayOfMonth.getDate()){
                 billListPeriod2.push(billList[i]);
             }
         }
@@ -224,12 +239,9 @@ function sortByDueDate(array){
 //                          Time Functions
 // =====================================================================
 
-const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-const today = new Date();
-let name = month[today.getMonth()];
 
-var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
 
 
 function addDays(date, days) {
@@ -302,39 +314,37 @@ function howManyPaychecks(endDate = today, startDate = initialPayday){
 }
 
 
-function nearestPayday(endDate = today, startDate = initialPayday){
-    // Calculate how many days to the closest payday before endDate
+function daysTilNearestPayday(endDate = today, startDate = initialPayday){
+    // Calculate how many days to the closest payday before endDate, returns an int
     // Probably can be eliminated
     let result = daySpan(endDate, startDate);
     result -= result%daysBetweenPaydays;
     return result;
 }
 
-function nearestPaydate(endDate = today, startDate = initialPayday){
+function daysTilNextPayday(){
+    return daysTilNearestPayday() + daysBetweenPaydays;
+}
+
+
+function nearestPayday(endDate = today, startDate = initialPayday){
     // Calculates the nearest Payday before the endDate
     // I think this can be simplified even further using modulo, but for now it works
-    let daysTilPayday = nearestPayday(endDate, startDate);
+    let daysTilPayday = daysTilNearestPayday(endDate, startDate);
     return addDays(initialPayday, daysTilPayday);
 }
 
+function nextPaycheck(){
+    let previousPayday = nearestPayday();
+    let nextPaycheck = addDays(previousPayday, daysBetweenPaydays);
+    return nextPaycheck;
+}
 
 
 function paydayCalendar(lookAhead = lookAheadPaychecks, startDate = initialPayday, endDate = today){
     
-    
-
-    
-
 
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -356,13 +366,12 @@ const HTMLdaysRemaining = getID('daysRemaining');
 const HTMLnextPaycheck = getID('nextPaycheck');
 const HTMLperiod2Expenses = getID('period2Expenses');
 
-
-// Empty strings need functions to determine their values
-HTMLcurrentPeriod.innerHTML = "";
+HTMLcurrentPeriod.innerHTML = nearestPayday().toDateString();
 HTMLperiod1Expenses.innerHTML = period1Expenses;
-HTMLdaysRemaining.innerHTML = "";
-HTMLnextPaycheck.innerHTML = "";
+HTMLdaysRemaining.innerHTML = daysTilNextPayday();
+HTMLnextPaycheck.innerHTML = nextPaycheck().toDateString();
 HTMLperiod2Expenses.innerHTML = period2Expenses;
+
 
 // Options
 const HTMLbillsDueNow = getID("billsDueNow");
