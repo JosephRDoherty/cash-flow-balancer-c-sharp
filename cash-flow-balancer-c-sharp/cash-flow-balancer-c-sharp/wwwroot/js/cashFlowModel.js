@@ -21,12 +21,6 @@ const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 const joePay = 1205;
 const elizaPay = 1113;
 
-
-// These will need to be calculated on a bi-weekly basis.
-// These can potentially get annoying and I might just make the user figure it out.
-const payDay1 = 1; 
-const payDay2 = 14;
-
 const daysBetweenPaydays = 14;
 // Remember months are zero-indexed, so -= 1 from month number
 const initialPayday = new Date(2022, 9, 14);
@@ -34,6 +28,9 @@ const lookAheadPaychecks = 4;
 
 const paycheckCalendar = [];
 
+// THIS BROKE SOME THINGS
+const payDay1 = nearestPayday().getDate(); 
+const payDay2 = nextPaycheck().getDate();
 
 // Very complicated math to calculate how much money we get on payday
 const period1 = joePay + elizaPay;
@@ -61,9 +58,6 @@ class Bill {
         billList.push(this)
     }
 }
-
-
-
 
 // =====================================================================
 //                                    Bills stuff
@@ -126,7 +120,10 @@ function payPeriodCalc(period){
     }
     else if(period === 2) {
         for(let i=0; i<billList.length; i++){
-            if(billList[i].dueDate >= payDay2 && billList[i].dueDate <= lastDayOfMonth.getDate()){
+            // numToDate works until it doesn't. It needs to handle the overflow into the next month, and I'm not sure how to do that.
+            // currently numToDate(billList[0].dueDate) === Sun Oct 02 2022. It needs to also equal Nov 02 2022.
+            // Ultimately I think both of these need to be refactored to accomodate the new time related functions that I worked so hard to make
+            if(billList[i].dueDate >= payDay2 && numToDate(billList[i].dueDate) <= nextPaycheck(2)){
                 billListPeriod2.push(billList[i]);
             }
         }
@@ -330,9 +327,10 @@ function nearestPayday(endDate = today, startDate = initialPayday){
     return addDays(initialPayday, daysTilPayday);
 }
 
-function nextPaycheck(){
+function nextPaycheck(multiplier = 1){
+    // returns a date
     let previousPayday = nearestPayday();
-    let nextPaycheck = addDays(previousPayday, daysBetweenPaydays);
+    let nextPaycheck = addDays(previousPayday, (daysBetweenPaydays * multiplier));
     return nextPaycheck;
 }
 
