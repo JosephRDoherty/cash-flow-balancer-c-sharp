@@ -20,10 +20,13 @@ const elizaPay = 1113;
 // These can potentially get annoying and I might just make the user figure it out.
 const payDay1 = 1; 
 const payDay2 = 14;
-const lastDayOfMonth = 28; // Eventually this will be generated based on the current month, for now this works
-// Idea for above:
-// Find the last day of the month, and then make a function that handles the overflow from 30-1 or 31-1 or 28-1
-// Then add 14 from the payday to calculate the entire pay schedule without dealing with datetime nonsense
+
+const daysBetweenPaydays = 14;
+// Remember months are zero-indexed, so -= 1 from month number
+const initialPayday = new Date(2022, 9, 14);
+const lookAheadPaychecks = 4;
+
+const paycheckCalendar = [];
 
 
 // Very complicated math to calculate how much money we get on payday
@@ -213,6 +216,108 @@ function sortByDueDate(array){
 
     array.sort(compareDueDate);
 }
+
+
+
+
+// =====================================================================
+//                          Time Functions
+// =====================================================================
+
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+const today = new Date();
+let name = month[today.getMonth()];
+
+var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+function addDays(date, days) {
+    // Returns a date
+    // days should be an integer
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+function subtractDays(date, days) {
+    // Returns a date
+    // days should be an integer
+    var result = new Date(date);
+    result.setDate(result.getDate() - days);
+    return result;
+}
+
+function daySpan(newDate, oldDate){
+    //
+    // newDate is the latest date, oldDate is the oldest date
+    let result = newDate.getTime() - oldDate.getTime();
+    result = Math.round(result / (1000 * 60 * 60 * 24));
+    return result
+
+}
+
+function paydayPredictor(interval = daysBetweenPaydays, fromPayday = initialPayday){
+    var nextPayday = addDays(fromPayday, interval);
+
+    return nextPayday;
+}
+
+
+// predict paydays starting from initial payday and up to a couple months ahead of today.
+// maybe eventually keep track of the initial payday somewhere else, and set checkpoints,
+// so that in a year the program doesn't have to calculate an entire year's worth of paydays just to get to today.
+// or I can just change the initial payday manually in the code if and when it starts to get slow.
+
+// find today
+// add 4 paychecks to today
+// calculate paydays starting from initial payday and up to the +4 paychecks date
+// spit them out into an array
+
+function numToDate(num, date = today){
+    // Assumes you want the month and year to be the same as today
+    var result = new Date(date);
+    result.setDate(num);
+    return result;
+}
+
+function toDate(year, month, day){
+    var result = new Date(year, month, day);
+    return result;
+}
+
+
+function howManyDays(startDate = initialPayday, endDate = today){
+    // Calculate how many days between 2 dates, returns an int
+    return daySpan(endDate, startDate);
+
+}
+
+function howManyPaychecks(startDate = initialPayday, endDate = today, lookAhead = 0){
+    // Calculate how many paychecks between 2 dates
+    let numOfDays = howManyDays(startDate, endDate);
+    let numOfPaychecks = numOfDays / daysBetweenPaydays + lookAhead;
+    return numOfPaychecks;
+}
+
+
+
+function paydayCalendar(lookAhead = lookAheadPaychecks, startDate = initialPayday, endDate = today){
+    // paycheckCalendar is the array to push to
+    // for loop. add paycheck dates to an array until it's added lookAhead past today
+    
+
+    
+
+
+}
+
+
+
+
+
+
+
+
 
 
 
