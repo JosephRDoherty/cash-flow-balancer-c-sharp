@@ -231,6 +231,7 @@ let name = month[today.getMonth()];
 
 var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
+
 function addDays(date, days) {
     // Returns a date
     // days should be an integer
@@ -238,6 +239,7 @@ function addDays(date, days) {
     result.setDate(result.getDate() + days);
     return result;
 }
+
 
 function subtractDays(date, days) {
     // Returns a date
@@ -247,8 +249,9 @@ function subtractDays(date, days) {
     return result;
 }
 
+
 function daySpan(newDate, oldDate){
-    //
+    // Calculate how many days between 2 dates, returns an int
     // newDate is the latest date, oldDate is the oldest date
     let result = newDate.getTime() - oldDate.getTime();
     result = Math.round(result / (1000 * 60 * 60 * 24));
@@ -256,7 +259,11 @@ function daySpan(newDate, oldDate){
 
 }
 
+
 function paydayPredictor(interval = daysBetweenPaydays, fromPayday = initialPayday){
+    // This function is redundant except for the defaults.
+    // I don't want the generic addDays to have these defaults, so this makes it easy
+    // I might delete this IDK yet
     var nextPayday = addDays(fromPayday, interval);
 
     return nextPayday;
@@ -280,30 +287,40 @@ function numToDate(num, date = today){
     return result;
 }
 
+
 function toDate(year, month, day){
     var result = new Date(year, month, day);
     return result;
 }
 
 
-function howManyDays(startDate = initialPayday, endDate = today){
-    // Calculate how many days between 2 dates, returns an int
-    return daySpan(endDate, startDate);
-
+function howManyPaychecks(endDate = today, startDate = initialPayday){
+    // Calculate how many paychecks between 2 dates
+    let result = nearestPayday(endDate, startDate);
+    result = result/daysBetweenPaydays;
+    return result;
 }
 
-function howManyPaychecks(startDate = initialPayday, endDate = today, lookAhead = 0){
-    // Calculate how many paychecks between 2 dates
-    let numOfDays = howManyDays(startDate, endDate);
-    let numOfPaychecks = numOfDays / daysBetweenPaydays + lookAhead;
-    return numOfPaychecks;
+
+function nearestPayday(endDate = today, startDate = initialPayday){
+    // Calculate how many days to the closest payday before endDate
+    // Probably can be eliminated
+    let result = daySpan(endDate, startDate);
+    result -= result%daysBetweenPaydays;
+    return result;
+}
+
+function nearestPaydate(endDate = today, startDate = initialPayday){
+    // Calculates the nearest Payday before the endDate
+    // I think this can be simplified even further using modulo, but for now it works
+    let daysTilPayday = nearestPayday(endDate, startDate);
+    return addDays(initialPayday, daysTilPayday);
 }
 
 
 
 function paydayCalendar(lookAhead = lookAheadPaychecks, startDate = initialPayday, endDate = today){
-    // paycheckCalendar is the array to push to
-    // for loop. add paycheck dates to an array until it's added lookAhead past today
+    
     
 
     
