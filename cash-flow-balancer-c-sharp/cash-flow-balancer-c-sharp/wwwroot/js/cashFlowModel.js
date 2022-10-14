@@ -240,10 +240,6 @@ function sortByDueDate(array){
 // =====================================================================
 
 
-
-
-
-
 function addDays(date, days) {
     // Returns a date
     // days should be an integer
