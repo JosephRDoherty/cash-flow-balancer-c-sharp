@@ -25,10 +25,11 @@
                 <li>Total Monthly Expenses: $<span id="monthlyExpenses"> </span></li>
                 <li>Fortnight Budget: $<span id="fortnightBudget"></span></li>
                 <li>Monthly Profit: $<span id="monthlyProfit"> </span></li>
-                <li></li>
+                <li style="visibility:hidden;"></li>
                 <li>Current Fortnight: <span id="currentFortnight"> </span></li>
                 <li>Income Per Fortnight: $<span id="totalIncome"> </span></li>
                 <li>Amount Due This Fortnight: $<span  id="fortnight1Expenses"> </span></li>
+                <li style="visibility:hidden;"></li>
                 <li>Days Remaining: <span id="daysRemaining"> </span></li>
                 <li>Next Paycheck: <span id="nextPaycheck"> </span></li>
                 <li>Amount Due Next Fortnight: <span id="fortnight2Expenses"> </span></li>
@@ -38,21 +39,33 @@
 
         <div class="options">
             <h4>Options:</h4>
-            <ul class="options">
+            <ul class="optionsUl">
                 <li class="btn" id="billsDueNow">Bills Due this Fortnight: $<span id="fortnight1Cost"></span></li>
-                <div id="billsDueNowDropDown" class="dropDown" style="display: none"></div>
                 <li class="btn" id="billsDueNext">Bills Due next Fortnight: $<span id="fortnight2Cost"></span></li>
-                <div id="billsDueNextDropDown" class="dropDown" style="display: none"></div>
                 <li class="btn" id="billsDueFortnight3">Bills Due Fortnight 3: $<span id="fortnight3Cost"></span></li>
-                <div id="billsDueFortnight3DropDown" class="dropDown" style="display: none"></div>
                 <li class="btn" id="billsDueFortnight4">Bills Due Fortnight 4: $<span id="fortnight4Cost"></span></li>
-                <div id="billsDueFortnight4DropDown" class="dropDown" style="display: none"></div>
-
                 <li class="btn" id="billList">All Bills</li>
-                <div id="allBillsDropDown" class="dropDown" style="display: none"></div>
-                <li class="btn">Add/Update Bill</li>
-                <li class="btn">Add/Update Paycheck</li>
+                <li class="btn" style="display: none">Add/Update Bill</li>
+                <li class="btn" style="display: none">Add/Update Paycheck</li>
             </ul>
+
+            <div class="dropdownArea">
+                <div>
+                    <div id="billsDueNowDropDown" class="dropDown" style="display: none"></div>
+                </div>
+                <div>
+                    <div id="billsDueNextDropDown" class="dropDown" style="display: none"></div>
+                </div>
+                <div>
+                    <div id="billsDueFortnight3DropDown" class="dropDown" style="display: none"></div>
+                </div>
+                <div>
+                    <div id="billsDueFortnight4DropDown" class="dropDown" style="display: none"></div>
+                </div>
+                <div>
+                    <div id="allBillsDropDown" class="dropDown" style="display: none"></div>
+                </div>
+            </div>
         </div>
     </div>
 

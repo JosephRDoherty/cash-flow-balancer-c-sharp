@@ -35,8 +35,8 @@
     }
 
     .menu {
-        display: flex;
-        justify-content: space-between;
+        /* display: flex;
+        justify-content: space-between; */
         width: 100%;
     }
 
@@ -59,11 +59,16 @@
             }
 
     .options {
-        display: flex;
-        flex-direction: column;
-        justify-self: flex-end;
+        /* display: flex;
+        flex-direction: row;
+        justify-self: flex-end; */
         padding: 1rem;
         gap: .5rem;
+    }
+
+    .optionsUl {
+        display: flex;
+        justify-content: space-between;
     }
 
     .dropDown {
@@ -73,8 +78,14 @@
         align-self: center;
         min-width: fit-content;
         padding: 1.5rem;
-        font-weight: bold;
         border-radius: 25px;
+        font-size: 2rem;
+    }
+
+    .dropdownArea {
+        width: 100%;
+        min-height: 60vh;
+        transition: all 1s ease-in-out;
     }
 
 

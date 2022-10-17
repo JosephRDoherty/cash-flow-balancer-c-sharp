@@ -96,7 +96,7 @@ let rings = new Bill("Rings", 25, 8);
 let internet = new Bill("Ziply Internet", 53.19, 10);
 let washer = new Bill("Washer Home Depot Card", 34, 11);
 let affirm1 = new Bill("Affirm 1", 22.62, 12);
-let rent = new Bill("Rent", 625, 26);
+let rent = new Bill("Rent", 625, 1);
 let rent2 = new Bill("Rent", 625, 12);
 let capTwo = new Bill("Capital One 2", 25, 12);
 let affirm2 = new Bill("Affirm 2", 22.30, 13);
@@ -126,7 +126,7 @@ let food = new Bill("Food", 400, 1);
 
 sortByDueDate(billList);
 
-// initialize arrays for each pay fortnight
+// initialize arrays for each fortnight
 const billListFortnight1 = payPeriodCalc(nearestPayday(), nextPaycheck());
 const billListFortnight2 = payPeriodCalc(nextPaycheck(1), nextPaycheck(2));
 const billListFortnight3 = payPeriodCalc(nextPaycheck(2), nextPaycheck(3));
@@ -206,11 +206,13 @@ function printBillArray(array){
     var str = "";
     array.forEach(obj => {
         // for (let key in obj) {
+            str += "<p>"
             str += obj.name;
             str += ": $";
             str += obj.amount;
             str += " Due: ";
             str += obj.dueDate
+            str += "</p>"
             str += " <br> "
         //}
     })
