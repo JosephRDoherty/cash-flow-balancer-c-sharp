@@ -318,14 +318,25 @@ function incomeThisMonth(month = today.getMonth(), year = today.getFullYear()){
 function cashFlowBalancer(){
     // Look for imbalances, and add a "savings" bill to the previous fortnight, if there's room in the budget for it
     
+    
 
 }
 
 function fortnightBudget(){
     // Calculates the amount of money we need to save for bills
     let profitPercent = findPercent(monthlyIncome, monthlyExpenses);
+    // This option Finds the value of the profitPercent on totalIncome, the fortnightly income
     let fortnightCost = findValueOfPercent(totalIncome, profitPercent);
-    return Math.ceil(fortnightCost);
+    // This option multiplies the entire yearly cost of bills, and then divides it evenly across all paychecks.
+    // This may not work because of those magic months where we get an extra paycheck only happen twice a year.
+    let yearlyCost = monthlyExpenses * 12;
+    let fortnightCost2 = yearlyCost / 26;
+
+    // Not sure which is better, fortnightCost or fortnightCost2. For now I'm using fortnightCost2,
+    // but I have a feeling that once I get all the bills in here, it will reveal an issue with this method.
+    // Until then, we will find out.
+
+    return Math.ceil(fortnightCost2);
 }
 
 
