@@ -1,0 +1,35 @@
+Wells Fargo	$37.00	2
+E Pay Pal	$76.00	2
+Geico	$178.05	2
+Spotify	$12.99	4
+Capital One 1	$25.00	4
+Renters Insurance 	$14.42	5
+Adobe	$29.99	6
+Rings	$25	8
+Internet	$53.19	10
+Washer	$34.00	11
+Affirm IT 1	$22.62	12
+Rent	$1,250.00	12
+Capital One 2	$25.00	12
+Affirm IT 2	$22.30	13
+E Care Credit	$29.00	13
+Destiny Card	$40.00	13
+Trash	$34.72	15
+E Chase Card	$40.00	15
+J Care Credit	$29.00	16
+Credit One Card	$30.00	16
+J Paypal	$65.00	16
+J Upstart	$194.54	17
+Verizon	$115.05	18
+Fortiva Card	$59.00	18
+E Upstart	$213.05	19
+Power Bill	$100.00	20
+Google Drive	$9.99	20
+Disney Plus	$7.99	27
+E Geico	$15.00	27
+Xbox 	$35.00	28
+Car Payment	$332.79	28
+Back Taxes	$35.00	28
+Gas	$0.00	30
+Food	$0.00	1
+E Care Credit	$30.00	

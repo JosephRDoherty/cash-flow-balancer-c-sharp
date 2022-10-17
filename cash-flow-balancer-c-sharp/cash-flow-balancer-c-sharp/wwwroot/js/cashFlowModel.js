@@ -22,6 +22,7 @@ const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 // but since paychecks are way more stable now, IDK if it's worth the trouble.
 const joePay = 1205;
 const elizaPay = 1113;
+const totalIncome = joePay + elizaPay;
 
 const daysBetweenPaydays = 14;
 // Remember months are zero-indexed, so -= 1 from month number
@@ -30,15 +31,24 @@ const initialPayday = new Date(2022, 9, 14);
 // so that in a year the program doesn't have to calculate an entire year's worth of paydays just to get to today.
 // or I can just change the initial payday manually in the code if and when it starts to get slow.
 
+// Base Pay before taxes:
+const joeHourPay = 20;
+const joeHoursPerWeek = 40;
+const joeWeeksPerYear = 52;
+const joeBasePayAnnual = joeHourPay*joeHoursPerWeek*joeWeeksPerYear;
 
-const paycheckCalendar = [];
+const elizaHourPay = 18.69;
+const elizaHoursPerWeek = 40;
+const elizaWeeksPerYear = 49;
+const elizaBasePayAnnual = elizaHourPay*elizaHoursPerWeek*elizaWeeksPerYear;
 
-// THIS BROKE SOME THINGS
+const yearlyGrossIncome = joeBasePayAnnual + elizaBasePayAnnual;
+const yearlyNetIncome = totalIncome * 26;
+
 const payDay1 = nearestPayday(); 
 const payDay2 = nextPaycheck();
 
 // Very complicated math to calculate how much money we get on payday
-const totalIncome = joePay + elizaPay;
 const monthlyIncome = incomeThisMonth(today.getMonth(), today.getFullYear());
 
 
@@ -52,7 +62,7 @@ class Bill {
     // Creates the bill class
     constructor (name, amount, dueDate) {
         this.name = name;
-        this.amount = amount;
+        this.amount = Math.ceil(amount);
         this.dueDate = dueDate;
 
         this.init();
@@ -86,7 +96,8 @@ let rings = new Bill("Rings", 25, 8);
 let internet = new Bill("Ziply Internet", 53.19, 10);
 let washer = new Bill("Washer Home Depot Card", 34, 11);
 let affirm1 = new Bill("Affirm 1", 22.62, 12);
-let rent = new Bill("Rent", 1250, 12);
+let rent = new Bill("Rent", 625, 26);
+let rent2 = new Bill("Rent", 625, 12);
 let capTwo = new Bill("Capital One 2", 25, 12);
 let affirm2 = new Bill("Affirm 2", 22.30, 13);
 let eCareCredit = new Bill("Elizabeth Care Credit", 29, 13);
@@ -113,8 +124,6 @@ let food = new Bill("Food", 400, 1);
 
 
 
-
-
 sortByDueDate(billList);
 
 // initialize arrays for each pay fortnight
@@ -132,7 +141,9 @@ const fortnight4Expenses = amountDueFortnightCalc(billListFortnight4);
 const monthlyExpenses = amountDueFortnightCalc(billList);
 const monthlyProfit = findProfit(monthlyIncome, monthlyExpenses);
 
+const yearlyCost = monthlyExpenses * 12;
 
+const yearlyProfit = findProfit(yearlyNetIncome, yearlyCost);
 
 // =====================================================================
 //                             Functions
