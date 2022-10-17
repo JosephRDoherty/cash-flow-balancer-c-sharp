@@ -75,11 +75,45 @@ const billList = [];
 // ---------------------------------------------------------------------------------------------------------------------------------
 // Eventually this will be kept in a database, but for now this works.
 
-let carPayment = new Bill("Car Payment", 333, 28);
+let wellsFargo = new Bill("Wells Fargo Card", 37, 2);
+let elizaPayPal = new Bill("Elizabeth PayPal", 76, 2);
+let geico = new Bill("Joe's Car Insurance", 178.05, 2);
+let spotify = new Bill("Spotify", 12.99, 4);
+let capOne = new Bill("Capital One 1", 25, 4);
+let rentInsurance = new Bill("Renters Insurance", 14.42, 5);
+let adobe = new Bill("Adobe", 29.99, 6);
+let rings = new Bill("Rings", 25, 8);
+let internet = new Bill("Ziply Internet", 53.19, 10);
+let washer = new Bill("Washer Home Depot Card", 34, 11);
+let affirm1 = new Bill("Affirm 1", 22.62, 12);
 let rent = new Bill("Rent", 1250, 12);
-let phone = new Bill("Verizon", 115, 2);
-let power = new Bill("Electricity", 100, 19);
-let capitalOne = new Bill("Capital One", 25, 4);
+let capTwo = new Bill("Capital One 2", 25, 12);
+let affirm2 = new Bill("Affirm 2", 22.30, 13);
+let eCareCredit = new Bill("Elizabeth Care Credit", 29, 13);
+let destinyCard = new Bill("Destiny Card", 40, 13);
+let trash = new Bill("Trash", 34.72, 15);
+let chaseCard = new Bill("Chase Card", 40, 15);
+let jCareCredit = new Bill("Joe's Care Credit", 29, 16);
+let creditOne = new Bill("Credit One Card", 30, 16);
+let jPayPal = new Bill("Joe's PayPal", 65, 16);
+let jUpstart = new Bill("Joe's Upstart", 194.54, 17);
+let phoneBill = new Bill("Verizon", 115.05, 18);
+let fortivaCard = new Bill("Fortiva Card", 59, 18);
+let eUpstart = new Bill("Elizabeth's Upstart", 213.05, 19);
+let powerBill = new Bill("Power Bill", 100, 20);
+let googleDrive = new Bill("Google Drive", 9.99, 20);
+let disneyPlus = new Bill("Disney+", 7.99, 27);
+let elizaGeico = new Bill("Elizabeth's Geico", 15, 27);
+let xboxCard = new Bill("Xbox Card", 35, 28);
+let carPayment = new Bill("Car Payment", 332.79, 28);
+let backTaxes = new Bill("Back Taxes", 35, 28);
+let gas = new Bill("Gas", 100, 1);
+let food = new Bill("Food", 400, 1);
+
+
+
+
+
 
 sortByDueDate(billList);
 
