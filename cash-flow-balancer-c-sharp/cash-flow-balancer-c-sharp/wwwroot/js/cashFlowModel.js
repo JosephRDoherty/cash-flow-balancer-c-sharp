@@ -5,10 +5,12 @@
 //
 
 
-// Date Initializing stuff, to make the code work
+// Date Initializing stuff
+// I don't know if I'll ever use this Month-name array, but the minute I delete it I'll wish I had it.
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const today = new Date();
+const nextMonth = toDate(today.getFullYear, today.getMonth + 1, today.getDate);
 let name = month[today.getMonth()];
 const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
@@ -24,18 +26,21 @@ const elizaPay = 1113;
 const daysBetweenPaydays = 14;
 // Remember months are zero-indexed, so -= 1 from month number
 const initialPayday = new Date(2022, 9, 14);
-const lookAheadPaychecks = 4;
+// maybe eventually keep track of the initial payday somewhere else, and set checkpoints,
+// so that in a year the program doesn't have to calculate an entire year's worth of paydays just to get to today.
+// or I can just change the initial payday manually in the code if and when it starts to get slow.
+
 
 const paycheckCalendar = [];
 
 // THIS BROKE SOME THINGS
-const payDay1 = nearestPayday().getDate(); 
-const payDay2 = nextPaycheck().getDate();
+const payDay1 = nearestPayday(); 
+const payDay2 = nextPaycheck();
 
 // Very complicated math to calculate how much money we get on payday
-const period1 = joePay + elizaPay;
-const period2 = joePay + elizaPay;
-const totalIncome = period1 + period2;
+const totalIncome = joePay + elizaPay;
+const monthlyIncome = incomeThisMonth(today.getMonth(), today.getFullYear());
+
 
 
 
@@ -78,18 +83,20 @@ let capitalOne = new Bill("Capital One", 25, 4);
 
 sortByDueDate(billList);
 
-// initialize arrays for each pay period
-const billListPeriod1 = [];
-const billListPeriod2 = [];
+// initialize arrays for each pay fortnight
+const billListFortnight1 = payPeriodCalc(nearestPayday(), nextPaycheck());
+const billListFortnight2 = payPeriodCalc(nextPaycheck(1), nextPaycheck(2));
+const billListFortnight3 = payPeriodCalc(nextPaycheck(2), nextPaycheck(3));
+const billListFortnight4 = payPeriodCalc(nextPaycheck(3), nextPaycheck(4));
+
 
 // call functions to calculate expenses
-const period1Expenses = amountDuePeriodCalc(1);
-const period2Expenses = amountDuePeriodCalc(2);
-const totalExpenses = period1Expenses + period2Expenses;
-
-// this is an object with idealCost information.
-const idealCost = findIdealCost();
-
+const fortnight1Expenses = amountDueFortnightCalc(billListFortnight1);
+const fortnight2Expenses = amountDueFortnightCalc(billListFortnight2);
+const fortnight3Expenses = amountDueFortnightCalc(billListFortnight3);
+const fortnight4Expenses = amountDueFortnightCalc(billListFortnight4);
+const monthlyExpenses = amountDueFortnightCalc(billList);
+const monthlyProfit = findProfit(monthlyIncome, monthlyExpenses);
 
 
 
@@ -98,64 +105,29 @@ const idealCost = findIdealCost();
 // =====================================================================
 
 
-// Rework all this code involving period1 and period2
+// Rework all this code involving fortnight1 and fortnight2
 // It was a temporary thing, and these should all be using the date functions below
-// the periods could be defined using dates, perhaps
-// That's a whole other can of worms.
 
 
+function payPeriodCalc(startDate, endDate){
+    let billArray = [];
+    for(let i=0; i<billList.length; i++){
 
-
-function payPeriodCalc(period){
-    // This creates the billListPeriod arrays.
-    // These arrays only contain the bills due during the specific period
-    // tell it what pay period you'd like to view, 1 or 2
-    if(period === 1){
-        for(let i=0; i<billList.length; i++){
-            if(billList[i].dueDate >= payDay1 && billList[i].dueDate < payDay2){
-                billListPeriod1.push(billList[i]);
-            }
+        // Compare this month and next month
+        if((numToDate(billList[i].dueDate, endDate) >= startDate || numToDate(billList[i].dueDate, startDate) >= startDate) && numToDate(billList[i].dueDate, endDate) <= endDate){
+            billArray.push(billList[i]);
         }
-        sortByDueDate(billListPeriod1);
     }
-    else if(period === 2) {
-        for(let i=0; i<billList.length; i++){
-            // numToDate works until it doesn't. It needs to handle the overflow into the next month, and I'm not sure how to do that.
-            // currently numToDate(billList[0].dueDate) === Sun Oct 02 2022. It needs to also equal Nov 02 2022.
-            // Ultimately I think both of these need to be refactored to accomodate the new time related functions that I worked so hard to make
-            if(billList[i].dueDate >= payDay2 && numToDate(billList[i].dueDate) <= nextPaycheck(2)){
-                billListPeriod2.push(billList[i]);
-            }
-        }
-        sortByDueDate(billListPeriod2);
-    } else {
-        console.log("Please enter a valid pay period");
-    }
+    return billArray;
 }
 
 
-function amountDuePeriodCalc(period) {
-    // calculates the amound due during the respective pay period.
-    // probably can be combined with payPeriodCalc() above, I'm kinda repeating myself here with these loops
-    if(period === 1){
-        let amountDue = 0;
-        payPeriodCalc(1);
-        for (let i=0; i<billListPeriod1.length; i++){
-            amountDue += billListPeriod1[i].amount;
-        }
-        return amountDue;
-    } else if (period === 2){
-        let amountDue = 0;
-        payPeriodCalc(2);
-        for (let i=0; i<billListPeriod2.length; i++){
-            amountDue += billListPeriod2[i].amount;
-        }
-        return amountDue;
-    } else {
-        console.log("Please enter a valid pay period");
+function amountDueFortnightCalc(billArray){
+    let amountDue = 0;
+    for(let i=0; i<billArray.length; i++){
+        amountDue += billArray[i].amount;
     }
-
-    
+    return amountDue;
 }
 
 
@@ -175,33 +147,13 @@ function findValueOfPercent(percentOf, percentage) {
 }
 
 
-function findProfit(income = totalIncome, expenses = totalExpenses){
+function findProfit(income = totalIncome, expenses = monthlyExpenses){
     // Finds how much money remains after expences
-    // defaults to totalIncome and totalExpenses for ease of use, but I'm adding this for future functionality
+    // defaults to totalIncome and monthlyExpenses for ease of use, but I'm adding this for future functionality
     let profit = income - expenses;
     return profit;
 }
 
-
-function findIdealCost(){
-    // This function finds the amount needed to pay with each pay period to make the bill cost the same percentage of the income each pay period
-    // It finds the value of the percentage of each pay period, then converts that to dollars
-    // essentially maintaining the same percentage amount remaining each pay period
-    // You may notice this is currently just dividing by two, but that won't always be the case if paychecks fluctuate.
-
-    let percentage = findPercent(totalIncome, totalExpenses);
-    let period1Cost = findValueOfPercent(period1, percentage);
-    let period2Cost = findValueOfPercent(period2, percentage);
-
-    const idealCost = {
-        percentCost: percentage,
-        period1Ideal: period1Cost,
-        period1Profit: findProfit(period1, period1Cost),
-        period2Ideal: period2Cost,
-        period2Profit: findProfit(period2, period2Cost)
-    }
-    return idealCost;
-}
 
 function printBillArray(array){
     // prints any bill array
@@ -275,16 +227,6 @@ function paydayPredictor(interval = daysBetweenPaydays, fromPayday = initialPayd
 }
 
 
-// predict paydays starting from initial payday and up to a couple months ahead of today.
-// maybe eventually keep track of the initial payday somewhere else, and set checkpoints,
-// so that in a year the program doesn't have to calculate an entire year's worth of paydays just to get to today.
-// or I can just change the initial payday manually in the code if and when it starts to get slow.
-
-// find today
-// add 4 paychecks to today
-// calculate paydays starting from initial payday and up to the +4 paychecks date
-// spit them out into an array
-
 function numToDate(num, date = today){
     // Assumes you want the month and year to be the same as today
     var result = new Date(date);
@@ -316,7 +258,7 @@ function daysTilNearestPayday(endDate = today, startDate = initialPayday){
 }
 
 function daysTilNextPayday(){
-    return daysTilNearestPayday() + daysBetweenPaydays;
+    return subtractDays(nextPaycheck(), today.getDate()).getDate();
 }
 
 
@@ -324,20 +266,66 @@ function nearestPayday(endDate = today, startDate = initialPayday){
     // Calculates the nearest Payday before the endDate
     // I think this can be simplified even further using modulo, but for now it works
     let daysTilPayday = daysTilNearestPayday(endDate, startDate);
-    return addDays(initialPayday, daysTilPayday);
+    return addDays(startDate, daysTilPayday);
 }
 
-function nextPaycheck(multiplier = 1){
+
+function nextPaycheck(multiplier = 1, previousPayday = nearestPayday()){
     // returns a date
-    let previousPayday = nearestPayday();
+    // to find the paycheck after next, enter 2 as the multiplier.
     let nextPaycheck = addDays(previousPayday, (daysBetweenPaydays * multiplier));
     return nextPaycheck;
 }
 
 
-function paydayCalendar(lookAhead = lookAheadPaychecks, startDate = initialPayday, endDate = today){
+function paydayCalendar(startDate = initialPayday, endDate = today){
+    // Create an array of paydays, create a search bar type thing on the site that uses this function
+
+}
+
+function incomeThisMonth(month = today.getMonth(), year = today.getFullYear()){
+    // Look at how many paychecks are coming this month, and then multiply that by typical fortnight income
+    let startDate = toDate(year, month, 1);
+    let endDate = toDate(year, month + 1, 0);
+    let howManyPaychecks = 2;
+    let firstPaycheck = nearestPayday(startDate);
+
+    if(firstPaycheck.getMonth() !== startDate.getMonth()){
+        firstPaycheck = addDays(firstPaycheck, daysBetweenPaydays);
+    }
+
+    let thirdCheck = nextPaycheck(2, firstPaycheck)
+
+    if(thirdCheck.getMonth() === startDate.getMonth()){
+        // detects magic months, where we get 3 paychecks
+        // I'd like to alert the user of an upcoming magic month eventually
+        howManyPaychecks += 1;
+    }
+
+    return totalIncome * howManyPaychecks;
+    
+}
+
+
+
+
+// =====================================================================
+//                           CASH FLOW BALANCER FUNCTIONS
+// =====================================================================
+
+// The big boy functions. The functions to end all functions. Everything has been leading to this. It's time to fulfill your destiny....
+
+function cashFlowBalancer(){
+    // Look for imbalances, and add a "savings" bill to the previous fortnight, if there's room in the budget for it
     
 
+}
+
+function fortnightBudget(){
+    // Calculates the amount of money we need to save for bills
+    let profitPercent = findPercent(monthlyIncome, monthlyExpenses);
+    let fortnightCost = findValueOfPercent(totalIncome, profitPercent);
+    return Math.ceil(fortnightCost);
 }
 
 
@@ -353,31 +341,91 @@ function getID(id){
     return document.getElementById(id);
 }
 
-// Top Section
-const HTMLcurrentPeriod = getID('currentPeriod');
-const HTMLperiod1Expenses = getID('period1Expenses');
-const HTMLdaysRemaining = getID('daysRemaining');
-const HTMLnextPaycheck = getID('nextPaycheck');
-const HTMLperiod2Expenses = getID('period2Expenses');
+// Stats
+const HTMLtoday = getID('today');
+HTMLtoday.innerHTML = today.toDateString();
 
-HTMLcurrentPeriod.innerHTML = nearestPayday().toDateString();
-HTMLperiod1Expenses.innerHTML = period1Expenses;
+
+const HTMLfortnightBudget = getID('fortnightBudget');
+HTMLfortnightBudget.innerHTML = fortnightBudget();
+
+
+const HTMLmonthlyIncome = getID('monthlyIncome');
+HTMLmonthlyIncome.innerHTML = monthlyIncome;
+
+
+const HTMLtotalIncome = getID('totalIncome');
+HTMLtotalIncome.innerHTML = totalIncome;
+
+
+const HTMLmonthlyProfit = getID('monthlyProfit');
+HTMLmonthlyProfit.innerHTML = monthlyProfit;
+
+
+const HTMLmonthlyExpenses = getID('monthlyExpenses');
+HTMLmonthlyExpenses.innerHTML = monthlyExpenses;
+
+
+const HTMLcurrentFortnight = getID('currentFortnight');
+HTMLcurrentFortnight.innerHTML = nearestPayday().toDateString();
+
+
+const HTMLfortnight1Expenses = getID('fortnight1Expenses');
+HTMLfortnight1Expenses.innerHTML = fortnight1Expenses;
+
+
+const HTMLdaysRemaining = getID('daysRemaining');
 HTMLdaysRemaining.innerHTML = daysTilNextPayday();
+
+
+const HTMLnextPaycheck = getID('nextPaycheck');
 HTMLnextPaycheck.innerHTML = nextPaycheck().toDateString();
-HTMLperiod2Expenses.innerHTML = period2Expenses;
+
+
+const HTMLfortnight2Expenses = getID('fortnight2Expenses');
+HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
+
+
 
 
 // Options
+// Fortnight 1
 const HTMLbillsDueNow = getID("billsDueNow");
 HTMLbillsDueNow.addEventListener("click", function(){showDiv("billsDueNowDropDown", "flex")});
 const HTMLbillsDueNowDropDown = getID("billsDueNowDropDown");
+const HTMLfortnight1Cost = getID("fortnight1Cost");
+HTMLfortnight1Cost.innerHTML = fortnight1Expenses;
+HTMLbillsDueNowDropDown.innerHTML = printBillArray(billListFortnight1);
+
+// Fortnight 2
 const HTMLbillsDueNext = getID("billsDueNext");
 HTMLbillsDueNext.addEventListener("click", function(){showDiv("billsDueNextDropDown", "flex")});
 const HTMLbillsDueNextDropDown = getID("billsDueNextDropDown");
+const HTMLfortnight2Cost = getID("fortnight2Cost");
+HTMLfortnight2Cost.innerHTML = fortnight2Expenses;
+HTMLbillsDueNextDropDown.innerHTML = printBillArray(billListFortnight2);
 
+// Fortnight 3
+const HTMLbillsDueFortnight3 = getID("billsDueFortnight3");
+HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "flex")});
+const HTMLbillsDueFortnight3DropDown = getID("billsDueFortnight3DropDown");
+const HTMLfortnight3Cost = getID("fortnight3Cost");
+HTMLfortnight3Cost.innerHTML = fortnight3Expenses;
+HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
 
-HTMLbillsDueNowDropDown.innerHTML = printBillArray(billListPeriod1);
-HTMLbillsDueNextDropDown.innerHTML = printBillArray(billListPeriod2);
+// Fortnight 4
+const HTMLbillsDueFortnight4 = getID("billsDueFortnight4");
+HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "flex")});
+const HTMLbillsDueFortnight4DropDown = getID("billsDueFortnight4DropDown");
+const HTMLfortnight4Cost = getID("fortnight4Cost");
+HTMLfortnight4Cost.innerHTML = fortnight4Expenses;
+HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
+
+// All Bills
+const HTMLbillsList = getID("billList");
+HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "flex")});
+const HTMLallBillsDropDown = getID("allBillsDropDown");
+HTMLallBillsDropDown.innerHTML = printBillArray(billList);
 
 
 document.getElementById("secretButton").addEventListener("click", function() {
