@@ -479,6 +479,7 @@ HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
 
 
 // Options
+
 // Fortnight 1
 const HTMLbillsDueFortnight1 = getID("billsDueFortnight1");
 HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn")});
