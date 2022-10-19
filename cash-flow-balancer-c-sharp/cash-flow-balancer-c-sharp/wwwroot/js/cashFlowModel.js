@@ -60,11 +60,11 @@ const monthlyIncome = incomeThisMonth(today.getMonth(), today.getFullYear());
 // =====================================================================
 class Bill {
     // Creates the bill class
-    constructor (name, amount, dueDate) {
+    constructor (name, amount, dueDate, type=null) {
         this.name = name;
         this.amount = Math.ceil(amount);
         this.dueDate = dueDate;
-
+        this.type = type;
         this.init();
     };
 
@@ -85,41 +85,41 @@ const billList = [];
 // ---------------------------------------------------------------------------------------------------------------------------------
 // Eventually this will be kept in a database, but for now this works.
 
-let wellsFargo = new Bill("Wells Fargo Card", 37, 2);
-let elizaPayPal = new Bill("Elizabeth PayPal", 76, 2);
-let geico = new Bill("Joe's Car Insurance", 178.05, 2);
-let spotify = new Bill("Spotify", 12.99, 4);
-let capOne = new Bill("Capital One 1", 25, 4);
-let rentInsurance = new Bill("Renters Insurance", 14.42, 5);
-let adobe = new Bill("Adobe", 29.99, 6);
-let rings = new Bill("Rings", 25, 8);
-let internet = new Bill("Ziply Internet", 53.19, 10);
-let washer = new Bill("Washer Home Depot Card", 34, 11);
-let affirm1 = new Bill("Affirm 1", 22.62, 12);
-let rent = new Bill("Rent", 625, 1);
-let rent2 = new Bill("Rent", 625, 12);
-let capTwo = new Bill("Capital One 2", 25, 12);
-let affirm2 = new Bill("Affirm 2", 22.30, 13);
-let eCareCredit = new Bill("Elizabeth Care Credit", 29, 13);
-let destinyCard = new Bill("Destiny Card", 40, 13);
-let trash = new Bill("Trash", 34.72, 15);
-let chaseCard = new Bill("Chase Card", 40, 15);
-let jCareCredit = new Bill("Joe's Care Credit", 29, 16);
-let creditOne = new Bill("Credit One Card", 30, 16);
-let jPayPal = new Bill("Joe's PayPal", 65, 16);
-let jUpstart = new Bill("Joe's Upstart", 194.54, 17);
-let phoneBill = new Bill("Verizon", 115.05, 18);
-let fortivaCard = new Bill("Fortiva Card", 59, 18);
-let eUpstart = new Bill("Elizabeth's Upstart", 213.05, 19);
-let powerBill = new Bill("Power Bill", 100, 20);
-let googleDrive = new Bill("Google Drive", 9.99, 20);
-let disneyPlus = new Bill("Disney+", 7.99, 27);
-let elizaGeico = new Bill("Elizabeth's Geico", 15, 27);
-let xboxCard = new Bill("Xbox Card", 35, 28);
-let carPayment = new Bill("Car Payment", 332.79, 28);
-let backTaxes = new Bill("Back Taxes", 35, 28);
-let gas = new Bill("Gas", 100, 1);
-let food = new Bill("Food", 400, 1);
+let wellsFargo = new Bill("Wells Fargo Card", 37, 2, "Credit Card");
+let elizaPayPal = new Bill("Elizabeth PayPal", 76, 2, "Credit Card");
+let geico = new Bill("Joe's Car Insurance", 178.05, 2, "Insurance");
+let spotify = new Bill("Spotify", 12.99, 4, "Streaming");
+let capOne = new Bill("Capital One 1", 25, 4, "Credit Card");
+let rentInsurance = new Bill("Renters Insurance", 14.42, 5, "Insurance");
+let adobe = new Bill("Adobe", 29.99, 6, "Utility");
+let rings = new Bill("Rings", 25, 8, "Credit Card");
+let internet = new Bill("Ziply Internet", 53.19, 10, "Utility");
+let washer = new Bill("Home Depot Card", 34, 11, "Credit Card");
+let affirm1 = new Bill("Affirm 1", 22.62, 12, "Credit Card");
+let rent = new Bill("Rent", 1250, 12, "Misc");
+// let rent2 = new Bill("Rent", 625, 12, "Misc");
+let capTwo = new Bill("Capital One 2", 25, 12, "Credit Card");
+let affirm2 = new Bill("Affirm 2", 22.30, 13, "Credit Card");
+let eCareCredit = new Bill("Elizabeth Care Credit", 29, 13, "Credit Card");
+let destinyCard = new Bill("Destiny Card", 40, 13, "Credit Card");
+let trash = new Bill("Trash", 34.72, 15, "Utility");
+let chaseCard = new Bill("Chase Card", 40, 15, "Credit Card");
+let jCareCredit = new Bill("Joe's Care Credit", 29, 16, "Credit Card");
+let creditOne = new Bill("Credit One Card", 30, 16, "Credit Card");
+let jPayPal = new Bill("Joe's PayPal", 65, 16, "Credit Card");
+let jUpstart = new Bill("Joe's Upstart", 194.54, 17, "Credit Card");
+let phoneBill = new Bill("Verizon", 115.05, 18, "Utility");
+let fortivaCard = new Bill("Fortiva Card", 59, 18, "Credit Card");
+let eUpstart = new Bill("Elizabeth's Upstart", 213.05, 19, "Credit Card");
+let powerBill = new Bill("Power Bill", 100, 20, "Utility");
+let googleDrive = new Bill("Google Drive", 9.99, 20, "Utility");
+let disneyPlus = new Bill("Disney+", 7.99, 27, "Streaming");
+let elizaGeico = new Bill("Elizabeth's Geico", 15, 27, "Insurance");
+let xboxCard = new Bill("Xbox Card", 35, 28, "Credit Card");
+let carPayment = new Bill("Car Payment", 332.79, 28, "Misc");
+let backTaxes = new Bill("Back Taxes", 35, 28, "Credit Card");
+let gas = new Bill("Gas", 120, "N/A", "Utility");
+let food = new Bill("Food", 300, "N/A", "Misc");
 
 
 
@@ -134,40 +134,69 @@ const billListFortnight4 = payPeriodCalc(nextPaycheck(3), nextPaycheck(4));
 
 
 // call functions to calculate expenses
-const fortnight1Expenses = amountDueFortnightCalc(billListFortnight1);
-const fortnight2Expenses = amountDueFortnightCalc(billListFortnight2);
-const fortnight3Expenses = amountDueFortnightCalc(billListFortnight3);
-const fortnight4Expenses = amountDueFortnightCalc(billListFortnight4);
-const monthlyExpenses = amountDueFortnightCalc(billList);
+const fortnight1Expenses = arrayCostCalc(billListFortnight1);
+const fortnight2Expenses = arrayCostCalc(billListFortnight2);
+const fortnight3Expenses = arrayCostCalc(billListFortnight3);
+const fortnight4Expenses = arrayCostCalc(billListFortnight4);
+const monthlyExpenses = arrayCostCalc(billList);
 const monthlyProfit = findProfit(monthlyIncome, monthlyExpenses);
 
 const yearlyCost = monthlyExpenses * 12;
 
 const yearlyProfit = findProfit(yearlyNetIncome, yearlyCost);
 
+const fortnight1Profit = findProfit(totalIncome, fortnight1Expenses);
+const fortnight2Profit = findProfit(totalIncome, fortnight2Expenses);
+const fortnight3Profit = findProfit(totalIncome, fortnight3Expenses);
+const fortnight4Profit = findProfit(totalIncome, fortnight4Expenses);
+
+const creditCardList = typeFinder();
+const utilityList = typeFinder("Utility");
+const streamingList = typeFinder("Streaming");
+const insuranceList = typeFinder("Insurance");
+const miscList = typeFinder("Misc");
+
+const creditCardExpenses = arrayCostCalc(creditCardList);
+const utilityEpenses = arrayCostCalc(utilityList);
+const streamingExpenses = arrayCostCalc(streamingList);
+const insuranceExpenses = arrayCostCalc(insuranceList);
+const miscExpenses = arrayCostCalc(miscList);
+
+
+
+
 // =====================================================================
 //                             Functions
 // =====================================================================
-
-
-// Rework all this code involving fortnight1 and fortnight2
-// It was a temporary thing, and these should all be using the date functions below
 
 
 function payPeriodCalc(startDate, endDate){
     let billArray = [];
     for(let i=0; i<billList.length; i++){
 
-        // Compare this month and next month
-        if((numToDate(billList[i].dueDate, endDate) >= startDate || numToDate(billList[i].dueDate, startDate) >= startDate) && numToDate(billList[i].dueDate, endDate) <= endDate){
+        // If the date is during this month and fits within the date span, push it
+        if(numToDate(billList[i].dueDate, startDate) >= startDate && numToDate(billList[i].dueDate, startDate) <= endDate){
+            billArray.push(billList[i]);
+        // If the date is during NEXT month and fits within the date span, push it
+        } else if(numToDate(billList[i].dueDate, endDate) >= startDate && numToDate(billList[i].dueDate, endDate) <= endDate){
             billArray.push(billList[i]);
         }
     }
     return billArray;
 }
 
+function typeFinder(type="Credit Card", array=billList){
+    let typeArray = [];
+    for(let i=0; i<array.length; i++){
+        if(billList[i].type === type){
+            typeArray.push(array[i]);
+        }
+    }
+    return typeArray;
+}
 
-function amountDueFortnightCalc(billArray){
+
+function arrayCostCalc(billArray){
     let amountDue = 0;
     for(let i=0; i<billArray.length; i++){
         amountDue += billArray[i].amount;
@@ -206,14 +235,14 @@ function printBillArray(array){
     var str = "";
     array.forEach(obj => {
         // for (let key in obj) {
-            str += "<p>"
+            str += "<p><strong>"
             str += obj.name;
-            str += ": $";
+            str += "</strong><br>"
+            str += "$";
             str += obj.amount;
-            str += " Due: ";
+            str += " | Due: ";
             str += obj.dueDate
-            str += "</p>"
-            str += " <br> "
+            str += "</p><hr>"
         //}
     })
     return str;
@@ -427,6 +456,9 @@ HTMLmonthlyExpenses.innerHTML = monthlyExpenses;
 const HTMLcurrentFortnight = getID('currentFortnight');
 HTMLcurrentFortnight.innerHTML = nearestPayday().toDateString();
 
+const HTMLthisFortnightProfit = getID('thisFortnightProfit');
+HTMLthisFortnightProfit.innerHTML = fortnight1Profit;
+
 
 const HTMLfortnight1Expenses = getID('fortnight1Expenses');
 HTMLfortnight1Expenses.innerHTML = fortnight1Expenses;
@@ -448,24 +480,24 @@ HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
 
 // Options
 // Fortnight 1
-const HTMLbillsDueNow = getID("billsDueNow");
-HTMLbillsDueNow.addEventListener("click", function(){showDiv("billsDueNowDropDown", "flex")});
-const HTMLbillsDueNowDropDown = getID("billsDueNowDropDown");
+const HTMLbillsDueFortnight1 = getID("billsDueFortnight1");
+HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn")});
+const HTMLbillsDueFortnight1DropDown = getID("billsDueFortnight1DropDown");
 const HTMLfortnight1Cost = getID("fortnight1Cost");
 HTMLfortnight1Cost.innerHTML = fortnight1Expenses;
-HTMLbillsDueNowDropDown.innerHTML = printBillArray(billListFortnight1);
+HTMLbillsDueFortnight1DropDown.innerHTML = printBillArray(billListFortnight1);
 
 // Fortnight 2
-const HTMLbillsDueNext = getID("billsDueNext");
-HTMLbillsDueNext.addEventListener("click", function(){showDiv("billsDueNextDropDown", "flex")});
-const HTMLbillsDueNextDropDown = getID("billsDueNextDropDown");
+const HTMLbillsDueFortnight2 = getID("billsDueFortnight2");
+HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn")});
+const HTMLbillsDueFortnight2DropDown = getID("billsDueFortnight2DropDown");
 const HTMLfortnight2Cost = getID("fortnight2Cost");
 HTMLfortnight2Cost.innerHTML = fortnight2Expenses;
-HTMLbillsDueNextDropDown.innerHTML = printBillArray(billListFortnight2);
+HTMLbillsDueFortnight2DropDown.innerHTML = printBillArray(billListFortnight2);
 
 // Fortnight 3
 const HTMLbillsDueFortnight3 = getID("billsDueFortnight3");
-HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "flex")});
+HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn")});
 const HTMLbillsDueFortnight3DropDown = getID("billsDueFortnight3DropDown");
 const HTMLfortnight3Cost = getID("fortnight3Cost");
 HTMLfortnight3Cost.innerHTML = fortnight3Expenses;
@@ -473,7 +505,7 @@ HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
 
 // Fortnight 4
 const HTMLbillsDueFortnight4 = getID("billsDueFortnight4");
-HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "flex")});
+HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn")});
 const HTMLbillsDueFortnight4DropDown = getID("billsDueFortnight4DropDown");
 const HTMLfortnight4Cost = getID("fortnight4Cost");
 HTMLfortnight4Cost.innerHTML = fortnight4Expenses;
@@ -481,7 +513,7 @@ HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
 
 // All Bills
 const HTMLbillsList = getID("billList");
-HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "flex")});
+HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn")});
 const HTMLallBillsDropDown = getID("allBillsDropDown");
 HTMLallBillsDropDown.innerHTML = printBillArray(billList);
 
