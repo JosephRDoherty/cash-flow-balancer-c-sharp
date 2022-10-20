@@ -419,8 +419,22 @@ function fortnightBudgetv2(){
     return Math.ceil(fortnightCostv2);
 }
 
-function printFuturePaydayCost(lookAhead){
-    
+function printFuturePaydayCost(lookAhead, includeBills = false){
+    // should display a list of dates of paychecks, and the cost during that time
+    // I want to use this to look at a whole year of paychecks and look at profit etc
+    let totalAmount;
+    let averageCost;
+    for(let i =0; i<= lookAhead; i++){
+        let payDate = nextPaycheck(i).toDateString();
+        let amount = arrayCostCalc(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)));
+        totalAmount += amount;
+        console.log(payDate, amount);
+        if(includeBills){
+            console.log(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)))
+        }
+    }
+    averageCost = totalAmount / lookAhead;
+    console.log($`Total Cost: {totalAmount}, | Average Cost: {averageCost1}`);
 }
 
 
