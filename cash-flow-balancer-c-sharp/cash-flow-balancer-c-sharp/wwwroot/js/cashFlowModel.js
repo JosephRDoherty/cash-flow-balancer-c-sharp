@@ -175,10 +175,10 @@ function payPeriodCalc(startDate, endDate){
     for(let i=0; i<billList.length; i++){
 
         // If the date is during this month and fits within the date span, push it
-        if(numToDate(billList[i].dueDate, startDate) >= startDate && numToDate(billList[i].dueDate, startDate) <= endDate){
+        if(numToDate(billList[i].dueDate, startDate) >= startDate && numToDate(billList[i].dueDate, startDate) < endDate){
             billArray.push(billList[i]);
         // If the date is during NEXT month and fits within the date span, push it
-        } else if(numToDate(billList[i].dueDate, endDate) >= startDate && numToDate(billList[i].dueDate, endDate) <= endDate){
+        } else if(numToDate(billList[i].dueDate, endDate) >= startDate && numToDate(billList[i].dueDate, endDate) < endDate){
             billArray.push(billList[i]);
         }
     }
@@ -428,6 +428,18 @@ function getID(id){
     return document.getElementById(id);
 }
 
+function swapTitle(title, area){;
+    // designed to work with already-defined area variables, so no getID() here.
+    
+    // if the title area is the same, erase it
+    if(area.innerHTML === title){
+        area.innerHTML = "";
+    } else {
+        // otherwise, change it
+        area.innerHTML = title;
+    }
+}
+
 // Stats
 const HTMLtoday = getID('today');
 HTMLtoday.innerHTML = today.toDateString();
@@ -476,13 +488,19 @@ const HTMLfortnight2Expenses = getID('fortnight2Expenses');
 HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
 
 
+//===================================================================================================================================================
+
+// Information:
+const HTMLactiveFortnight = getID("activeFortnight");
+const HTMLfortnightInfo = getID("fortnightInfo");
 
 
-// Options
 
 // Fortnight 1
 const HTMLbillsDueFortnight1 = getID("billsDueFortnight1");
-HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn")});
+HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle("Fortnight 1 | ", HTMLactiveFortnight)});
+HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle(nearestPayday().toDateString(), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight1DropDown = getID("billsDueFortnight1DropDown");
 const HTMLfortnight1Cost = getID("fortnight1Cost");
 HTMLfortnight1Cost.innerHTML = fortnight1Expenses;
@@ -490,7 +508,9 @@ HTMLbillsDueFortnight1DropDown.innerHTML = printBillArray(billListFortnight1);
 
 // Fortnight 2
 const HTMLbillsDueFortnight2 = getID("billsDueFortnight2");
-HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn")});
+HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle("Fortnight 2 | ", HTMLactiveFortnight)});
+HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle(nextPaycheck(1).toDateString(), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight2DropDown = getID("billsDueFortnight2DropDown");
 const HTMLfortnight2Cost = getID("fortnight2Cost");
 HTMLfortnight2Cost.innerHTML = fortnight2Expenses;
@@ -498,7 +518,9 @@ HTMLbillsDueFortnight2DropDown.innerHTML = printBillArray(billListFortnight2);
 
 // Fortnight 3
 const HTMLbillsDueFortnight3 = getID("billsDueFortnight3");
-HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn")});
+HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle("Fortnight 3 | ", HTMLactiveFortnight)});
+HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle(nextPaycheck(2).toDateString(), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight3DropDown = getID("billsDueFortnight3DropDown");
 const HTMLfortnight3Cost = getID("fortnight3Cost");
 HTMLfortnight3Cost.innerHTML = fortnight3Expenses;
@@ -506,7 +528,9 @@ HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
 
 // Fortnight 4
 const HTMLbillsDueFortnight4 = getID("billsDueFortnight4");
-HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn")});
+HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle("Fortnight 4 | ", HTMLactiveFortnight)});
+HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle(nextPaycheck(3).toDateString(), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight4DropDown = getID("billsDueFortnight4DropDown");
 const HTMLfortnight4Cost = getID("fortnight4Cost");
 HTMLfortnight4Cost.innerHTML = fortnight4Expenses;
@@ -514,10 +538,13 @@ HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
 
 // All Bills
 const HTMLbillsList = getID("billList");
-HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn")});
+HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn", fortnightTabList)});
+HTMLbillsList.addEventListener("click", function(){swapTitle("All Bills", HTMLactiveFortnight)});
+HTMLbillsList.addEventListener("click", function(){swapTitle("", HTMLfortnightInfo)});
 const HTMLallBillsDropDown = getID("allBillsDropDown");
 HTMLallBillsDropDown.innerHTML = printBillArray(billList);
 
+const fortnightTabList = [HTMLbillsDueFortnight1, HTMLbillsDueFortnight2, HTMLbillsDueFortnight3, HTMLbillsDueFortnight4,HTMLbillsList]
 
 document.getElementById("secretButton").addEventListener("click", function() {
     document.getElementById("secretButton").innerHTML = "Greetings";

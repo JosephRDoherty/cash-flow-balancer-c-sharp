@@ -29,28 +29,74 @@ function showTabPanel() {
 
 }
 
-// Toggles the visibility of the div
-function showDiv(divID, displayType, tabToChange=null, defaultClass = null, activeClass=null) {
-    // check if the tab is hidden
-    if (getID(divID).style.display !== "none") {
-
-        // hide tab
-        getID(divID).style.display = "none";
-
-        if(tabToChange !== null){
-            // Change the look of the tab
-            getID(tabToChange).classList.remove(activeClass);
-            getID(tabToChange).classList.add(defaultClass);
-        }
+function darkMode() {
+    if(document.body.className !== "darkMode"){
+        document.body.className = "darkMode";
+        getID("darkModeBtn").className = "darkModeBtnActive";
     } else {
-        // show tab
-        getID(divID).style.display = displayType;
+        document.body.className = "";
+        getID("darkModeBtn").className = "";
+    }
+}
 
-        if(tabToChange !== null){
-            // Change the look of the tab
-            getID(tabToChange).classList.add(activeClass);
-            getID(tabToChange).classList.remove(defaultClass);
+var activeTab = {
+    divID: null,
+    displayType: null,
+    divToChange: null,
+    defaultClass: null,
+    activeClass: null
+}
+
+function showDiv(divID, displayType, divToChange=null, defaultClass = null, activeClass=null){
+    // If it's not empty, make it so.
+    if(getID(divID).style.display !== "none") {
+        getID(divID).style.display = "none";
+        changeClass(divToChange, activeClass, defaultClass);
+        // clean the activeTab object
+        activeTab = {...activeTab,
+            divID: null,
+            displayType: null,
+            divToChange: null,
+            defaultClass: null,
+            activeClass: null
+        };
+    } else {
+        // Show it!
+        getID(divID).style.display = displayType;
+        changeClass(divToChange, defaultClass, activeClass);
+        // avoid the null error
+        if(activeTab.divID != null){
+            // get rid of the previous tab!!!
+            showDiv(activeTab.divID, activeTab.displayType, activeTab.divToChange, activeTab.defaultClass, activeTab.activeClass);
         }
+            // create new activeTab object
+            activeTab = {...activeTab,
+            divID: divID,
+            displayType: displayType,
+            divToChange: divToChange,
+            defaultClass: defaultClass,
+            activeClass: activeClass
+        }
+
     }
 
+
 }
+
+function changeClass(div, previousClass, newClass){
+        getID(div).classList.add(newClass);
+        getID(div).classList.remove(previousClass);
+}
+
+function recursionTest(){
+    // It goes forever, as expected
+    console.log("Recursion");
+    recursionTest();
+}
+
+
+// =============================================================
+//                      EVENT LISTENERS
+// =============================================================
+const darkModeBtn = getID("darkModeBtn");
+darkModeBtn.addEventListener("click", darkMode);

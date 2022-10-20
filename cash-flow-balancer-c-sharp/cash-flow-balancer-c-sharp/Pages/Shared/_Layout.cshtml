@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="~/cash_flow_balancer_c_sharp.styles.css" asp-append-version="true" />
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/86a01f560a.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <nav class="navBar">
-            <h3>J|Labs</h3>
+            <h3>J|Labs<span id="darkModeBtn"><i class="fa-solid fa-moon"></i></span></h3>
             <ul>
                 <li><a asp-page="/Index">Home</a></li>
                 <li><a asp-page="/Privacy">Privacy</a></li>
@@ -35,6 +36,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     
 
     @await RenderSectionAsync("Scripts", required: false)

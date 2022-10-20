@@ -106,25 +106,25 @@
 
     .dropDown {
         background-color: #e5fcf4;
+        color:#00150d;
         display: grid;
         grid-template-columns: 1fr;
         min-width: fit-content;
         height: 60vh;
         padding: 1.5rem;
         border-radius: 3px;
-
         overflow: visible;
         overflow-y: scroll;
     }
  
     .dropDown::-webkit-scrollbar {
         width: 1.5rem;
-        border: 2px solid #ccc;
     }
 
     .dropDown::-webkit-scrollbar-track {
         background-color: #e5fcf4;
         border-radius: 3px;
+        border-left: 2px solid #ccece0;
     }
 
     .dropDown::-webkit-scrollbar-thumb {
