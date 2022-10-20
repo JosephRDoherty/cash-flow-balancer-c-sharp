@@ -403,16 +403,20 @@ function fortnightBudget(){
     let profitPercent = findPercent(monthlyIncome, monthlyExpenses);
     // This option Finds the value of the profitPercent on totalIncome, the fortnightly income
     let fortnightCost = findValueOfPercent(totalIncome, profitPercent);
+
+    return Math.ceil(fortnightCost);
+}
+
+function fortnightBudgetv2(){
     // This option multiplies the entire yearly cost of bills, and then divides it evenly across all paychecks.
     // This may not work because of those magic months where we get an extra paycheck only happen twice a year.
     let yearlyCost = monthlyExpenses * 12;
-    let fortnightCost2 = yearlyCost / 26;
+    let fortnightCostv2 = yearlyCost / 26;
 
-    // Not sure which is better, fortnightCost or fortnightCost2. For now I'm using fortnightCost2,
-    // but I have a feeling that once I get all the bills in here, it will reveal an issue with this method.
-    // Until then, we will find out.
-
-    return Math.ceil(fortnightCost2);
+    // Not sure which is better, fortnightBudget or fortnightBudgetv2
+    // I feel like fortnightBudget is safer because it makes sure that all the bills within a month are paid with 2 pay checks,
+    // but with the way things are moving around slightly over the course of the year, it might be too much?
+    return Math.ceil(fortnightCostv2);
 }
 
 
@@ -430,7 +434,7 @@ function getID(id){
 
 function swapTitle(title, area){;
     // designed to work with already-defined area variables, so no getID() here.
-    
+
     // if the title area is the same, erase it
     if(area.innerHTML === title){
         area.innerHTML = "";
@@ -447,6 +451,9 @@ HTMLtoday.innerHTML = today.toDateString();
 
 const HTMLfortnightBudget = getID('fortnightBudget');
 HTMLfortnightBudget.innerHTML = fortnightBudget();
+
+const HTMLfortnightBudgetv2 = getID('fortnightBudgetv2');
+HTMLfortnightBudgetv2.innerHTML = fortnightBudgetv2();
 
 
 const HTMLmonthlyIncome = getID('monthlyIncome');
