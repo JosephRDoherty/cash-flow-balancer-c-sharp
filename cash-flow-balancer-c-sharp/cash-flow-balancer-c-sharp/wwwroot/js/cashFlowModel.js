@@ -419,6 +419,9 @@ function fortnightBudgetv2(){
     return Math.ceil(fortnightCostv2);
 }
 
+function printFuturePaydayCost(lookAhead){
+    
+}
 
 
 
