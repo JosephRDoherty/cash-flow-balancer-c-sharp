@@ -110,7 +110,7 @@ let jPayPal = new Bill("Joe's PayPal", 65, 16, "Credit Card");
 let jUpstart = new Bill("Joe's Upstart", 194.54, 17, "Credit Card");
 let phoneBill = new Bill("Verizon", 115.05, 18, "Utility");
 let fortivaCard = new Bill("Fortiva Card", 59, 18, "Credit Card");
-let eUpstart = new Bill("Elizabeth's Upstart", 213.05, 19, "Credit Card");
+let eUpstart = new Bill("Elizabeth's Upstart", 213.05, 13, "Credit Card");
 let powerBill = new Bill("Power Bill", 100, 20, "Utility");
 let googleDrive = new Bill("Google Drive", 9.99, 20, "Utility");
 let disneyPlus = new Bill("Disney+", 7.99, 27, "Streaming");
@@ -157,11 +157,11 @@ const insuranceList = typeFinder("Insurance");
 const miscList = typeFinder("Misc");
 
 const creditCardExpenses = arrayCostCalc(creditCardList);
-const utilityEpenses = arrayCostCalc(utilityList);
+const utilityExpenses = arrayCostCalc(utilityList);
 const streamingExpenses = arrayCostCalc(streamingList);
 const insuranceExpenses = arrayCostCalc(insuranceList);
 const miscExpenses = arrayCostCalc(miscList);
-
+  
 
 
 
