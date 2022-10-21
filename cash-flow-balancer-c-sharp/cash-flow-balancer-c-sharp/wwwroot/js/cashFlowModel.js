@@ -248,17 +248,49 @@ function printBillArray(array){
 
 function printFuturePaydayCost(array) {
     let str = "";
-    array.forEach(obj => {
-        str += "<p><strong>";
-        str += obj.date;
+    //array.forEach(obj => {
+    for(let i=0; i<array.length; i++){
+        str += "<div id='payDate" + i + "' class='payBtn' onclick='expandBills(" + i + ")'><p><strong> ";
+        str += array[i].date;
         str += "</strong><br>";
+        if(!(array[i].date === "Total" || array[i].date === "Average")){
+            str += "<i id='icon" + i + "' class='fa-solid fa-caret-right'></i> ";
+        }
         str += "$";
-        str += obj.cost;
-        str += "</p><hr>";
-        
-    })
+        str += array[i].cost;
+        str += " | $"
+        str += array[i].profit;
+        str += "</p>";
+        str += "<hr>"
+        if(!(array[i].date === "Total" || array[i].date === "Average")){
+            str += "<div id='expandedBills" + i + "' class='expandedBills'></div></div>"
+        }
+    }
     return str;
-    
+    // <i class="fa-solid fa-caret-down"></i>
+    // <i class="fa-solid fa-caret-right"></i>
+}
+
+function expandBills(element){
+    let elementID = "expandedBills" + element;    
+    const expandedBills = getID(elementID);
+    let iconID = "icon" + element;
+    const icon = getID(iconID);
+    if(expandedBills && icon) {
+        if(!expandedBills.innerHTML){
+            expandedBills.innerHTML = printBillArray(payPeriodCalc(nextPaycheck(element), nextPaycheck(element + 1)));
+            icon.className = "fa-solid fa-caret-down";
+        } else{
+            expandedBills.innerHTML = "";
+            icon.className = "fa-solid fa-caret-right";
+        }
+    } else {
+        const exempt = "payDate" + element;
+        const exemptItem = getID(exempt);
+        exemptItem.style.cursor = "text";
+        return false; // The element isn't created on "Total" and "Average" so this avoids the TypeError
+    }
+
 }
 
 function sortByDueDate(array){
@@ -329,6 +361,10 @@ function toDate(year, month, day){
     return result;
 }
 
+function removeDay(date){
+    return date.split(' ').slice(1).join(' '); // gets rid of the 'Mon' day thing
+}
+
 
 function howManyPaychecks(endDate = today, startDate = initialPayday){
     // Calculate how many paychecks between 2 dates
@@ -362,6 +398,10 @@ function nearestPayday(endDate = today, startDate = initialPayday){
 function nextPaycheck(multiplier = 1, previousPayday = nearestPayday()){
     // returns a date
     // to find the paycheck after next, enter 2 as the multiplier.
+    if(multiplier === 0){
+        return nearestPayday();
+    }
+
     let nextPaycheck = addDays(previousPayday, (daysBetweenPaydays * multiplier));
     return nextPaycheck;
 }
@@ -436,15 +476,20 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
     // should display a list of dates of paychecks, and the cost during that time
     // I want to use this to look at a whole year of paychecks and look at profit etc
     let totalAmount = 0;
+    let totalProfit = 0;
     let averageCost = 0;
+    let averageProfit = 0;
     let payCalendar = [];
     for(let i =0; i<= lookAhead; i++){
         let payDate = nextPaycheck(i).toDateString();
         let amount = arrayCostCalc(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)));
+        let profitLeft = totalIncome - amount;
         totalAmount += amount;
+        payDate = removeDay(payDate);
         let obj = {
             date: payDate,
-            cost: amount
+            cost: amount,
+            profit: profitLeft
         }
         payCalendar.push(obj);
 
@@ -456,14 +501,18 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
         }
     }
     averageCost = Math.ceil(totalAmount / lookAhead);
+    totalProfit = (totalIncome * lookAhead) - totalAmount;
+    averageProfit = Math.ceil(totalProfit / lookAhead);
     if(!printToConsole){
         let total = {
             date: "Total",
-            cost: totalAmount
+            cost: totalAmount,
+            profit: totalProfit
         }
         let average = {
             date: "Average",
-            cost: averageCost
+            cost: averageCost,
+            profit: averageProfit
         }
         payCalendar.push(total, average);
         return printFuturePaydayCost(payCalendar);
@@ -471,8 +520,8 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
     if(printToConsole){
         console.log(`Total Cost: ${totalAmount}, | Average Cost: ${averageCost}`);
     }
-
 }
+
 
 
 
@@ -552,7 +601,6 @@ HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
 //===================================================================================================================================================
 
 // Information:
-const HTMLactiveFortnight = getID("activeFortnight");
 const HTMLfortnightInfo = getID("fortnightInfo");
 
 
@@ -560,9 +608,10 @@ const HTMLfortnightInfo = getID("fortnightInfo");
 // Fortnight 1
 const HTMLbillsDueFortnight1 = getID("billsDueFortnight1");
 HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn", fortnightTabList)});
-HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle("Fortnight 1 | ", HTMLactiveFortnight)});
-HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle(nearestPayday().toDateString(), HTMLfortnightInfo)});
+HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle(removeDay(nearestPayday().toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight1DropDown = getID("billsDueFortnight1DropDown");
+const HTMLfortnight1Date = getID("fortnight1Date");
+HTMLfortnight1Date.innerHTML = removeDay(nextPaycheck(0).toDateString());
 const HTMLfortnight1Cost = getID("fortnight1Cost");
 HTMLfortnight1Cost.innerHTML = fortnight1Expenses;
 HTMLbillsDueFortnight1DropDown.innerHTML = printBillArray(billListFortnight1);
@@ -570,9 +619,10 @@ HTMLbillsDueFortnight1DropDown.innerHTML = printBillArray(billListFortnight1);
 // Fortnight 2
 const HTMLbillsDueFortnight2 = getID("billsDueFortnight2");
 HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn", fortnightTabList)});
-HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle("Fortnight 2 | ", HTMLactiveFortnight)});
-HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle(nextPaycheck(1).toDateString(), HTMLfortnightInfo)});
+HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(1).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight2DropDown = getID("billsDueFortnight2DropDown");
+const HTMLfortnight2Date = getID("fortnight2Date");
+HTMLfortnight2Date.innerHTML = removeDay(nextPaycheck(1).toDateString());
 const HTMLfortnight2Cost = getID("fortnight2Cost");
 HTMLfortnight2Cost.innerHTML = fortnight2Expenses;
 HTMLbillsDueFortnight2DropDown.innerHTML = printBillArray(billListFortnight2);
@@ -580,9 +630,10 @@ HTMLbillsDueFortnight2DropDown.innerHTML = printBillArray(billListFortnight2);
 // Fortnight 3
 const HTMLbillsDueFortnight3 = getID("billsDueFortnight3");
 HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn", fortnightTabList)});
-HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle("Fortnight 3 | ", HTMLactiveFortnight)});
-HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle(nextPaycheck(2).toDateString(), HTMLfortnightInfo)});
+HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(2).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight3DropDown = getID("billsDueFortnight3DropDown");
+const HTMLfortnight3Date = getID("fortnight3Date");
+HTMLfortnight3Date.innerHTML = removeDay(nextPaycheck(2).toDateString());
 const HTMLfortnight3Cost = getID("fortnight3Cost");
 HTMLfortnight3Cost.innerHTML = fortnight3Expenses;
 HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
@@ -590,9 +641,10 @@ HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
 // Fortnight 4
 const HTMLbillsDueFortnight4 = getID("billsDueFortnight4");
 HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn", fortnightTabList)});
-HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle("Fortnight 4 | ", HTMLactiveFortnight)});
-HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle(nextPaycheck(3).toDateString(), HTMLfortnightInfo)});
+HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(3).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight4DropDown = getID("billsDueFortnight4DropDown");
+const HTMLfortnight4Date = getID("fortnight4Date");
+HTMLfortnight4Date.innerHTML = removeDay(nextPaycheck(3).toDateString());
 const HTMLfortnight4Cost = getID("fortnight4Cost");
 HTMLfortnight4Cost.innerHTML = fortnight4Expenses;
 HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
@@ -600,16 +652,14 @@ HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
 // All Bills
 const HTMLbillsList = getID("billList");
 HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn", fortnightTabList)});
-HTMLbillsList.addEventListener("click", function(){swapTitle("All Bills", HTMLactiveFortnight)});
-HTMLbillsList.addEventListener("click", function(){swapTitle("", HTMLfortnightInfo)});
+HTMLbillsList.addEventListener("click", function(){swapTitle("All Bills", HTMLfortnightInfo)});
 const HTMLallBillsDropDown = getID("allBillsDropDown");
 HTMLallBillsDropDown.innerHTML = printBillArray(billList);
 
 // Pay Calendar
 const HTMLpayCalendar = getID("payCalendar");
 HTMLpayCalendar.addEventListener("click", function(){showDiv("payCalendarDropDown", "grid", "payCalendar", null, "activeBtn", fortnightTabList)});
-HTMLpayCalendar.addEventListener("click", function(){swapTitle("Pay Calendar", HTMLactiveFortnight)});
-HTMLpayCalendar.addEventListener("click", function(){swapTitle("", HTMLfortnightInfo)});
+HTMLpayCalendar.addEventListener("click", function(){swapTitle("Pay Calendar", HTMLfortnightInfo)});
 const HTMLpayCalendarDropDown = getID("payCalendarDropDown");
 HTMLpayCalendarDropDown.innerHTML = calcFuturePaydayCost(26);
 
@@ -617,7 +667,7 @@ const fortnightTabList = [HTMLbillsDueFortnight1, HTMLbillsDueFortnight2, HTMLbi
 
 document.getElementById("secretButton").addEventListener("click", function() {
     document.getElementById("secretButton").innerHTML = "Greetings";
-    console.log("got here");
+    console.log("You discovered my secret. You musn't tell a soul");
 });
 
 getID("secretButton").addEventListener("click", greetings);

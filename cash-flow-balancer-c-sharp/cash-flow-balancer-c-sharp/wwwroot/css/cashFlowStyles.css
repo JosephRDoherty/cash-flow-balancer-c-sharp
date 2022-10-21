@@ -144,14 +144,28 @@
     .dropdownArea {
         width: 50vw;
         min-height: 60vh;
+        margin-bottom: 2em;
         border: 1px solid #81f3c8;
         border-radius: 3px;
         box-shadow: -2px 2px 2px #b3f8de;
         transition: all 1s ease-in-out;
     }
 
+    .payBtn {
+        cursor:pointer;
+    }
 
+    .expandedBills {
+        margin-top: -16px;
+        margin-left: 2vw;
+        margin-bottom: 32px;
+        background-color: #a0f4d7;
+        border-left: 4px solid #002e1d;
+    }
 
+    .expandedBills p {
+        padding: 1em;
+    }
 
 
 
