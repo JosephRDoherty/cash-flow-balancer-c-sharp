@@ -232,20 +232,33 @@ function findProfit(income = totalIncome, expenses = monthlyExpenses){
 function printBillArray(array){
     // prints any bill array
     // for use mostly in HTML contexts 
-    var str = "";
+    let str = "";
     array.forEach(obj => {
-        // for (let key in obj) {
-            str += "<p><strong>"
+            str += "<p><strong>";
             str += obj.name;
-            str += "</strong><br>"
+            str += "</strong><br>";
             str += "$";
             str += obj.amount;
             str += " | Due: ";
-            str += obj.dueDate
-            str += "</p><hr>"
-        //}
+            str += obj.dueDate;
+            str += "</p><hr>";
     })
     return str;
+}
+
+function printFuturePaydayCost(array) {
+    let str = "";
+    array.forEach(obj => {
+        str += "<p><strong>";
+        str += obj.date;
+        str += "</strong><br>";
+        str += "$";
+        str += obj.cost;
+        str += "</p><hr>";
+        
+    })
+    return str;
+    
 }
 
 function sortByDueDate(array){
@@ -419,22 +432,46 @@ function fortnightBudgetv2(){
     return Math.ceil(fortnightCostv2);
 }
 
-function printFuturePaydayCost(lookAhead, includeBills = false){
+function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = false){
     // should display a list of dates of paychecks, and the cost during that time
     // I want to use this to look at a whole year of paychecks and look at profit etc
-    let totalAmount;
-    let averageCost;
+    let totalAmount = 0;
+    let averageCost = 0;
+    let payCalendar = [];
     for(let i =0; i<= lookAhead; i++){
         let payDate = nextPaycheck(i).toDateString();
         let amount = arrayCostCalc(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)));
         totalAmount += amount;
-        console.log(payDate, amount);
+        let obj = {
+            date: payDate,
+            cost: amount
+        }
+        payCalendar.push(obj);
+
+        if(printToConsole){
+            console.log(obj);
+        }
         if(includeBills){
             console.log(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)))
         }
     }
-    averageCost = totalAmount / lookAhead;
-    console.log($`Total Cost: {totalAmount}, | Average Cost: {averageCost1}`);
+    averageCost = Math.ceil(totalAmount / lookAhead);
+    if(!printToConsole){
+        let total = {
+            date: "Total",
+            cost: totalAmount
+        }
+        let average = {
+            date: "Average",
+            cost: averageCost
+        }
+        payCalendar.push(total, average);
+        return printFuturePaydayCost(payCalendar);
+    }
+    if(printToConsole){
+        console.log(`Total Cost: ${totalAmount}, | Average Cost: ${averageCost}`);
+    }
+
 }
 
 
@@ -567,6 +604,14 @@ HTMLbillsList.addEventListener("click", function(){swapTitle("All Bills", HTMLac
 HTMLbillsList.addEventListener("click", function(){swapTitle("", HTMLfortnightInfo)});
 const HTMLallBillsDropDown = getID("allBillsDropDown");
 HTMLallBillsDropDown.innerHTML = printBillArray(billList);
+
+// Pay Calendar
+const HTMLpayCalendar = getID("payCalendar");
+HTMLpayCalendar.addEventListener("click", function(){showDiv("payCalendarDropDown", "grid", "payCalendar", null, "activeBtn", fortnightTabList)});
+HTMLpayCalendar.addEventListener("click", function(){swapTitle("Pay Calendar", HTMLactiveFortnight)});
+HTMLpayCalendar.addEventListener("click", function(){swapTitle("", HTMLfortnightInfo)});
+const HTMLpayCalendarDropDown = getID("payCalendarDropDown");
+HTMLpayCalendarDropDown.innerHTML = calcFuturePaydayCost(26);
 
 const fortnightTabList = [HTMLbillsDueFortnight1, HTMLbillsDueFortnight2, HTMLbillsDueFortnight3, HTMLbillsDueFortnight4,HTMLbillsList]
 
