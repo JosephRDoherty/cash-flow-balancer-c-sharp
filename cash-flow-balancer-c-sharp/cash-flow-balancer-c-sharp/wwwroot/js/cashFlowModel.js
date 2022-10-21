@@ -522,7 +522,7 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
     }
 }
 
-function fortnightBudgetTester(array = calcFuturePaydayCost(26)){
+function fortnightBudgetTester(array = calcFuturePaydayCost(26), amountSaved = 1485){
     // This is the bare minimum to save every paycheck, so that we always have enough for bills: 1485 per fortnight
     // with this method, it's all about keeping that money safe. Sometimes we might end up with 2400 dollars in the account, but other times it drops to 26
     // with the minimum of 1485, we never really develop a savings, as it's all money saved for the future (even if it's far away)
@@ -530,7 +530,7 @@ function fortnightBudgetTester(array = calcFuturePaydayCost(26)){
     //=====================================================================================
     // THIS DOES NOT INCLUDE ANY OFF MONTHS WHERE INCOME IS NOT THE SAME AS NORMAL!!!!!!!!!
     //=====================================================================================
-    let savedPer = 1485; 
+    let savedPer = amountSaved;
     let postCost = 0;
     console.log("postCost: " + postCost);
     for(let i=0; i<array.length-2; i++){
