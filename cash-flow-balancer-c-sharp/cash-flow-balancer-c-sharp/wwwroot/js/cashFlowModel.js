@@ -515,13 +515,28 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
             profit: averageProfit
         }
         payCalendar.push(total, average);
-        return printFuturePaydayCost(payCalendar);
+        return payCalendar;
     }
     if(printToConsole){
         console.log(`Total Cost: ${totalAmount}, | Average Cost: ${averageCost}`);
     }
 }
 
+function fortnightBudgetTester(array = calcFuturePaydayCost(26)){
+    // This is the bare minimum to save every paycheck, so that we always have enough for bills: 1485 per fortnight
+    // with this method, it's all about keeping that money safe. Sometimes we might end up with 2400 dollars in the account, but other times it drops to 26
+    // with the minimum of 1485, we never really develop a savings, as it's all money saved for the future (even if it's far away)
+    // We would have to save ON TOP OF 1485.
+    let savedPer = 1485; 
+    let postCost = 0;
+    console.log("postCost: " + postCost);
+    for(let i=0; i<array.length-2; i++){
+        
+        console.log("array cost: " + array[i].cost);
+        postCost = postCost + savedPer - array[i].cost;
+        console.log("updated postCost: " + postCost);
+    }
+}
 
 
 
@@ -661,7 +676,7 @@ const HTMLpayCalendar = getID("payCalendar");
 HTMLpayCalendar.addEventListener("click", function(){showDiv("payCalendarDropDown", "grid", "payCalendar", null, "activeBtn", fortnightTabList)});
 HTMLpayCalendar.addEventListener("click", function(){swapTitle("Pay Calendar", HTMLfortnightInfo)});
 const HTMLpayCalendarDropDown = getID("payCalendarDropDown");
-HTMLpayCalendarDropDown.innerHTML = calcFuturePaydayCost(26);
+HTMLpayCalendarDropDown.innerHTML = printFuturePaydayCost(calcFuturePaydayCost(26));
 
 const fortnightTabList = [HTMLbillsDueFortnight1, HTMLbillsDueFortnight2, HTMLbillsDueFortnight3, HTMLbillsDueFortnight4,HTMLbillsList]
 
