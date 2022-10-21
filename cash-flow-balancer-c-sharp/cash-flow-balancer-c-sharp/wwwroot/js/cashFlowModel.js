@@ -527,6 +527,9 @@ function fortnightBudgetTester(array = calcFuturePaydayCost(26)){
     // with this method, it's all about keeping that money safe. Sometimes we might end up with 2400 dollars in the account, but other times it drops to 26
     // with the minimum of 1485, we never really develop a savings, as it's all money saved for the future (even if it's far away)
     // We would have to save ON TOP OF 1485.
+    //=====================================================================================
+    // THIS DOES NOT INCLUDE ANY OFF MONTHS WHERE INCOME IS NOT THE SAME AS NORMAL!!!!!!!!!
+    //=====================================================================================
     let savedPer = 1485; 
     let postCost = 0;
     console.log("postCost: " + postCost);
