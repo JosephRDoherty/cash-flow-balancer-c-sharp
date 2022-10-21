@@ -52,7 +52,70 @@ const payDay2 = nextPaycheck();
 const monthlyIncome = incomeThisMonth(today.getMonth(), today.getFullYear());
 
 
+// this is the documentation for the web application
+const informationStr = `
+<h3>Welcome to the Money Management System by J|Labs</h3>
+<p>MMS is a cash flow prediction and balancing web application built by Joe Doherty.</p>
+<hr>
+<h4>Expense Tracking</h4>
+<p>
+MMS offers a comprehensive expense-tracking system. At the top of the Information section you will find multiple tabs to view expenses due across 8 weeks, 
+separated by paydays. Each payday-payday section is 14 days, and thus called a "Fortnight". These are all tracked in real-time and will be automatically updated as
+the weeks go on, or if the pay schedule is changed. *Note, bills are sorted by date, resulting in bills from the previous month being put at the bottom of the list,
+despite the fact that they are due sooner. This is a minor inconvience that will be a major inconvience to solve. Just be aware of this as you are using this
+part of the MMS.
+</p>
+<hr>
+<h4>All Bills</h4>
+<p>
+This tab contains a list of all bills stored by the system. These are all sorted by due date, and includes the name, cost, and
+due date.
+</p>
+<hr>
+<h4>Pay Calendar</h4>
+<p>
+Finally is the "Pay Calendar". This displays 52 weeks of paydays and their associated costs. This is a useful tool for viewing cash flow across the next 12 months,
+which could be useful for planning vacations and more.
+</p>
+<hr>
+<h4>Stats</h4>
+<p>
+The "Stats" section displays various monthly and fortnightly stats, such as income, profit, budget tools, and more.
+<hr>
+<h5>Expected Income This Month</h5>
+<p>
+The "Expected Income This Month" section tracks
+how many paychecks occur within the month, and updates automatically to display those "Magic Months" where there are 3 paychecks within a single month.
+</p>
+<hr>
+<h5>Monthly Profit</h5>
+<p>
+Automatically calculates monthly profit based on the expected income and the monthly expenses.
+</p>
+<hr>
+<h5>Fortnight Budgets</h5>
+<p>
+These "Fortnight Budgets" are attempts to calculate an ideal amount of money to save every paycheck, in order to have a consistent cash flow. These three are calculated
+very differently:
+</p>
+<ul>
+    <li>Fortnight Budget v1 is calculated by finding the percentage of annual expenses to annual income, and budgeting that percentage of each paycheck</li>
+    <li>Fortnight Budget v2 is calculated by taking the total yearly expenses, and dividing it evenly across 26 paychecks</li>
+    <li>Fortnight Budget v3 is the most complicated. It uses a prediction algorithm to find the bare minimum required to budget. More info below.</li>
+</ul>
+<hr>
+<h4>Fortnight Budget v3</h4>
+<p>
+The Fortnight Budget v3 accurately predicts the next 52 weeks of paychecks, and finds the amount needed to save every fortnight in order to never go above budget.
+Sometimes, this will end up with $2400 saved up, only for it to drop considerably very quickly. With this model, there is little room for error, so maintaining the
+constant, even flow of cash is required for accurate budgeting. The other models end up developing a savings well beyond the required amount, which could be useful for
+building up a somewhat automatic buffer-zone or emergency fund. Fortnight Budget v3 actually ends up being less per-year than the expected yearly expenses. This is a 
+paradox, but it has to do with the fact that these payday-payday periods are not falling perfectly within one year or the next. This has been tested up to 4 years ahead,
+and is perfectly acceptable despite this fact. //CHECK THIS, IT MAY BE FORGETTING GAS AND FOOD, but I'm kinda thinking of making them separate anyways, since they're
+more free-flowing.
+</p>
 
+`;
 
 
 // =====================================================================
@@ -474,35 +537,38 @@ function fortnightBudgetv2(){
 
 function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = false){
     // should display a list of dates of paychecks, and the cost during that time
-    // I want to use this to look at a whole year of paychecks and look at profit etc
     let totalAmount = 0;
     let totalProfit = 0;
     let averageCost = 0;
     let averageProfit = 0;
-    let payCalendar = [];
+    let payCalendar = []; // Gets returned
     for(let i =0; i<= lookAhead; i++){
-        let payDate = nextPaycheck(i).toDateString();
-        let amount = arrayCostCalc(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)));
+        let payDate = nextPaycheck(i).toDateString(); //Finds the date and makes it pretty
+        let amount = arrayCostCalc(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1))); //Finds the total cost of that fortnight
         let profitLeft = totalIncome - amount;
         totalAmount += amount;
         payDate = removeDay(payDate);
+        // Create an object with all the data
         let obj = {
             date: payDate,
             cost: amount,
             profit: profitLeft
         }
-        payCalendar.push(obj);
+        payCalendar.push(obj); // Push the object to the array
 
+        // Makes it print to the console instead of being used for HTML Gen
         if(printToConsole){
             console.log(obj);
-        }
-        if(includeBills){
-            console.log(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)))
+            // Includes bills in the console printout, if requests
+            if(includeBills){
+                console.log(payPeriodCalc(nextPaycheck(i), nextPaycheck(i+1)))
+            }
         }
     }
     averageCost = Math.ceil(totalAmount / lookAhead);
     totalProfit = (totalIncome * lookAhead) - totalAmount;
     averageProfit = Math.ceil(totalProfit / lookAhead);
+    // Creates the Total and Average objects to be used in HTML Gen
     if(!printToConsole){
         let total = {
             date: "Total",
@@ -517,19 +583,14 @@ function calcFuturePaydayCost(lookAhead, printToConsole = false, includeBills = 
         payCalendar.push(total, average);
         return payCalendar;
     }
+    // Otherwise it prints these to the console
     if(printToConsole){
         console.log(`Total Cost: ${totalAmount}, | Average Cost: ${averageCost}`);
     }
 }
 
-function fortnightBudgetTester(array = calcFuturePaydayCost(26), amountSaved = 1485){
-    // This is the bare minimum to save every paycheck, so that we always have enough for bills: 1485 per fortnight
-    // with this method, it's all about keeping that money safe. Sometimes we might end up with 2400 dollars in the account, but other times it drops to 26
-    // with the minimum of 1485, we never really develop a savings, as it's all money saved for the future (even if it's far away)
-    // We would have to save ON TOP OF 1485.
-    //=====================================================================================
-    // THIS DOES NOT INCLUDE ANY OFF MONTHS WHERE INCOME IS NOT THE SAME AS NORMAL!!!!!!!!!
-    //=====================================================================================
+function fortnightBudgetTester(amountSaved = 1485,array = calcFuturePaydayCost(26)){
+
     let savedPer = amountSaved;
     let postCost = 0;
     console.log("postCost: " + postCost);
@@ -539,6 +600,48 @@ function fortnightBudgetTester(array = calcFuturePaydayCost(26), amountSaved = 1
         postCost = postCost + savedPer - array[i].cost;
         console.log("updated postCost: " + postCost);
     }
+}
+
+function fortnightBudgetv3(){
+    // This is the bare minimum to save every paycheck, so that we always have enough for bills: 1485 per fortnight
+    // with this method, it's all about keeping that money safe. Sometimes we might end up with 2400 dollars in the account, but other times it drops to 26
+    // with the minimum of 1485, we never really develop a savings, as it's all money saved for the future (even if it's far away)
+    // We would have to save ON TOP OF 1485.
+    //=====================================================================================
+    // THIS DOES NOT INCLUDE ANY OFF MONTHS WHERE INCOME IS NOT THE SAME AS NORMAL!!!!!!!!!
+    //=====================================================================================
+    let savedPer = 0;
+    let lookAhead = 52;
+    //let postCost = 0;
+    let array = calcFuturePaydayCost(lookAhead);
+    let loopResult = false;
+
+    function whileLoop(){
+        while(loopResult === false){
+            forLoop();
+            savedPer += 1;
+            //console.log("updated postCost: " + postCost);
+            console.log("SavedPer: " + savedPer);
+        }
+        return savedPer
+    }
+
+
+    function forLoop(){
+        let postCost = 0;
+        for(let i=0; i<array.length-2; i++){
+
+            postCost = postCost + savedPer - array[i].cost;
+            if(postCost < 0){
+                loopResult = false;
+                break;
+            }
+            loopResult = true;
+        }
+    }
+
+    return whileLoop();
+    
 }
 
 
@@ -575,6 +678,9 @@ HTMLfortnightBudget.innerHTML = fortnightBudget();
 
 const HTMLfortnightBudgetv2 = getID('fortnightBudgetv2');
 HTMLfortnightBudgetv2.innerHTML = fortnightBudgetv2();
+
+const HTMLfortnightBudgetv3 = getID('fortnightBudgetv3');
+HTMLfortnightBudgetv3.innerHTML = fortnightBudgetv3();
 
 
 const HTMLmonthlyIncome = getID('monthlyIncome');
@@ -621,11 +727,15 @@ HTMLfortnight2Expenses.innerHTML = fortnight2Expenses;
 // Information:
 const HTMLfortnightInfo = getID("fortnightInfo");
 
-
+const HTMLinformation = getID("information")
+HTMLinformation.addEventListener("click", function(){showDiv("informationDropDown", "grid", "information", null, "activeBtn")});
+HTMLinformation.addEventListener("click", function(){swapTitle("Help Menu", HTMLfortnightInfo)});
+const HTMLinformationDropDown = getID("informationDropDown");
+HTMLinformationDropDown.innerHTML = informationStr;
 
 // Fortnight 1
 const HTMLbillsDueFortnight1 = getID("billsDueFortnight1");
-HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight1.addEventListener("click", function(){showDiv("billsDueFortnight1DropDown", "grid", "billsDueFortnight1", null, "activeBtn")});
 HTMLbillsDueFortnight1.addEventListener("click", function(){swapTitle(removeDay(nearestPayday().toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight1DropDown = getID("billsDueFortnight1DropDown");
 const HTMLfortnight1Date = getID("fortnight1Date");
@@ -636,7 +746,7 @@ HTMLbillsDueFortnight1DropDown.innerHTML = printBillArray(billListFortnight1);
 
 // Fortnight 2
 const HTMLbillsDueFortnight2 = getID("billsDueFortnight2");
-HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight2.addEventListener("click", function(){showDiv("billsDueFortnight2DropDown", "grid", "billsDueFortnight2", null, "activeBtn")});
 HTMLbillsDueFortnight2.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(1).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight2DropDown = getID("billsDueFortnight2DropDown");
 const HTMLfortnight2Date = getID("fortnight2Date");
@@ -647,7 +757,7 @@ HTMLbillsDueFortnight2DropDown.innerHTML = printBillArray(billListFortnight2);
 
 // Fortnight 3
 const HTMLbillsDueFortnight3 = getID("billsDueFortnight3");
-HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight3.addEventListener("click", function(){showDiv("billsDueFortnight3DropDown", "grid", "billsDueFortnight3", null, "activeBtn")});
 HTMLbillsDueFortnight3.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(2).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight3DropDown = getID("billsDueFortnight3DropDown");
 const HTMLfortnight3Date = getID("fortnight3Date");
@@ -658,7 +768,7 @@ HTMLbillsDueFortnight3DropDown.innerHTML = printBillArray(billListFortnight3);
 
 // Fortnight 4
 const HTMLbillsDueFortnight4 = getID("billsDueFortnight4");
-HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn", fortnightTabList)});
+HTMLbillsDueFortnight4.addEventListener("click", function(){showDiv("billsDueFortnight4DropDown", "grid", "billsDueFortnight4", null, "activeBtn")});
 HTMLbillsDueFortnight4.addEventListener("click", function(){swapTitle(removeDay(nextPaycheck(3).toDateString()), HTMLfortnightInfo)});
 const HTMLbillsDueFortnight4DropDown = getID("billsDueFortnight4DropDown");
 const HTMLfortnight4Date = getID("fortnight4Date");
@@ -669,14 +779,14 @@ HTMLbillsDueFortnight4DropDown.innerHTML = printBillArray(billListFortnight4);
 
 // All Bills
 const HTMLbillsList = getID("billList");
-HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn", fortnightTabList)});
+HTMLbillsList.addEventListener("click", function(){showDiv("allBillsDropDown", "grid", "billList", null, "activeBtn")});
 HTMLbillsList.addEventListener("click", function(){swapTitle("All Bills", HTMLfortnightInfo)});
 const HTMLallBillsDropDown = getID("allBillsDropDown");
 HTMLallBillsDropDown.innerHTML = printBillArray(billList);
 
 // Pay Calendar
 const HTMLpayCalendar = getID("payCalendar");
-HTMLpayCalendar.addEventListener("click", function(){showDiv("payCalendarDropDown", "grid", "payCalendar", null, "activeBtn", fortnightTabList)});
+HTMLpayCalendar.addEventListener("click", function(){showDiv("payCalendarDropDown", "grid", "payCalendar", null, "activeBtn")});
 HTMLpayCalendar.addEventListener("click", function(){swapTitle("Pay Calendar", HTMLfortnightInfo)});
 const HTMLpayCalendarDropDown = getID("payCalendarDropDown");
 HTMLpayCalendarDropDown.innerHTML = printFuturePaydayCost(calcFuturePaydayCost(26));
