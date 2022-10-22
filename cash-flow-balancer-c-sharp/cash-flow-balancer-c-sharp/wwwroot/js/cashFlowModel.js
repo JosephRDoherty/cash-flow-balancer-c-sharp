@@ -26,7 +26,7 @@ const totalIncome = joePay + elizaPay;
 
 const daysBetweenPaydays = 14;
 // Remember months are zero-indexed, so -= 1 from month number
-const initialPayday = new Date(2022, 9, 14);
+const initialPayday = new Date(2022, 9, 28);
 // maybe eventually keep track of the initial payday somewhere else, and set checkpoints,
 // so that in a year the program doesn't have to calculate an entire year's worth of paydays just to get to today.
 // or I can just change the initial payday manually in the code if and when it starts to get slow.
@@ -165,7 +165,7 @@ let capTwo = new Bill("Capital One 2", 25, 12, "Credit Card");
 let affirm2 = new Bill("Affirm 2", 22.30, 13, "Credit Card");
 let eCareCredit = new Bill("Elizabeth Care Credit", 29, 13, "Credit Card");
 let destinyCard = new Bill("Destiny Card", 40, 13, "Credit Card");
-let trash = new Bill("Trash", 34.72, 15, "Utility");
+let trash = new Bill("Trash", 34.72, 1, "Utility");
 let chaseCard = new Bill("Chase Card", 40, 15, "Credit Card");
 let jCareCredit = new Bill("Joe's Care Credit", 29, 16, "Credit Card");
 let creditOne = new Bill("Credit One Card", 30, 16, "Credit Card");
